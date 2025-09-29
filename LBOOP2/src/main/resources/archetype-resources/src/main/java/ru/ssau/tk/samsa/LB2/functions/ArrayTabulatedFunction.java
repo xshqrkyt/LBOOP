@@ -70,11 +70,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    protected double interpolate(double x, double leftX, double rightX, double leftY, double rightY) {
-         return leftY + (rightY - leftY) / (rightX - leftX) * (x - leftX);
-    }
-
-    @Override
     public int getCount() {
         return count;
     }
@@ -125,71 +120,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public void insert(double x, double y) {
-        if (indexOfX(x) != -1) {
-            int index = floorIndexOfX(x);
-            if (index == count)
-                --index;
-            setY(index, y);
-        }
-
-        else {
-            double[] newxValues = new double[count+1];
-            double[] newyValues = new double[count+1];
-
-            if (x < xValues[0]) {
-                newxValues[0] = x;
-                newyValues[0] = y;
-
-                for (int i = 0; i < count; ++i) {
-                    newxValues[i + 1] = xValues[i];
-                    newyValues[i + 1] = yValues[i];
-                }
-            }
-
-            else if (x > xValues[count - 1]) {
-                for (int i = 0; i < count; ++i) {
-                    newxValues[i] = xValues[i];
-                    newyValues[i] = yValues[i];
-                }
-
-                newxValues[count] = x;
-                newyValues[count] = y;
-            }
-
-            else {
-                int i = 0, n = count - 1;
-                while (i < n && xValues[i] < x) {
-                    if (xValues[i + 1] < x) {
-                        newxValues[i] = xValues[i];
-                        newyValues[i] = yValues[i];
-                    }
-
-                    else {
-                        newxValues[i] = xValues[i];;
-                        newyValues[i] = yValues[i];
-                        newxValues[i + 1] = x;
-                        newyValues[i + 1] = y;
-                    }
-
-                    ++i;
-                }
-
-                while (i < count) {
-                    newxValues[i + 1] = xValues[i];
-                    newyValues[i + 1] = yValues[i];
-                    ++i;
-                }
-
-            }
-
-            xValues = newxValues;
-            yValues = newyValues;
-            ++count;
-        }
-    }
-
-    @Override
     public void remove(int index) {
         double[] newxValues = new double[count - 1];
         double[] newyValues = new double[count - 1];
@@ -215,4 +145,5 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
         return;
     }
+
 }
