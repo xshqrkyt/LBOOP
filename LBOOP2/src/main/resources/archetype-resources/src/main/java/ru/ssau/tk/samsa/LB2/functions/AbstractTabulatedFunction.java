@@ -1,4 +1,4 @@
-package $ru.ssau.tk._NAME_._PROJECT_.functions;
+package ru.sau.tk.samsa.LB2.functions;
 
 public abstract class AbstractTabulatedFunction implements MathFunction, TabulatedFunction {
     protected abstract int floorIndexOfX(double x);
