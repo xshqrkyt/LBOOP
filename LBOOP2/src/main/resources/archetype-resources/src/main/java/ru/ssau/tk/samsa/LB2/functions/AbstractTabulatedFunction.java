@@ -5,7 +5,9 @@ public abstract class AbstractTabulatedFunction implements MathFunction, Tabulat
     protected abstract double extrapolateLeft(double x);
     protected abstract double extrapolateRight(double x);
     protected abstract double interpolate(double x, int floorIndex);
-    protected abstract double interpolate(double x, double leftX, double rightX, double leftY, double rightY);
+    protected double interpolate(double x, double leftX, double rightX, double leftY, double rightY) {
+        return leftY + (rightY - leftY) / (rightX - leftX) * (x - leftX);
+    }
     
     @Override
     public double apply(double x) {
