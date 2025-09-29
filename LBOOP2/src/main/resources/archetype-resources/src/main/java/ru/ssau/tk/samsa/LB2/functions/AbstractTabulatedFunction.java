@@ -1,4 +1,4 @@
-package ru.sau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.functions;
 
 public abstract class AbstractTabulatedFunction implements MathFunction, TabulatedFunction {
     protected abstract int floorIndexOfX(double x);
@@ -6,7 +6,7 @@ public abstract class AbstractTabulatedFunction implements MathFunction, Tabulat
     protected abstract double extrapolateRight(double x);
     protected abstract double interpolate(double x, int floorIndex);
     protected abstract double interpolate(double x, double leftX, double rightX, double leftY, double rightY);
-
+    @Override
     public double apply(double x) {
         if (x < leftBound())
             return extrapolateLeft(x);

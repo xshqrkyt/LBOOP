@@ -1,4 +1,4 @@
-package ru.sau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.functions;
 
 public interface MathFunction {
     double apply(double x);

@@ -1,4 +1,4 @@
-package ru.sau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.functions;
 
 import static java.lang.Math.pow;
 
