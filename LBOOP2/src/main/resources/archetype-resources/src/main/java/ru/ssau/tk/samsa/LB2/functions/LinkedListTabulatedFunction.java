@@ -82,36 +82,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
         }
     }
-    @Override
-    public void insert(double x, double y) {
-        int existingIndex = indexOfX(x);
-        if (existingIndex != -1) {
-            setY(existingIndex, y);
-            return;
-        }
 
-        int insertIndex = 0;
-        while (insertIndex < count && xValues[insertIndex] < x) {
-            insertIndex++;
-        }
-
-        double[] newXValues = new double[count + 1];
-        double[] newYValues = new double[count + 1];
-
-        System.arraycopy(xValues, 0, newXValues, 0, insertIndex);
-        System.arraycopy(yValues, 0, newYValues, 0, insertIndex);
-
-        newXValues[insertIndex] = x;
-        newYValues[insertIndex] = y;
-
-        // Копируем оставшиеся элементы
-        System.arraycopy(xValues, insertIndex, newXValues, insertIndex + 1, count - insertIndex);
-        System.arraycopy(yValues, insertIndex, newYValues, insertIndex + 1, count - insertIndex);
-
-        xValues = newXValues;
-        yValues = newYValues;
-        count++;
-    }
     @Override
     public void remove(int index) {
         if (index < 0 || index >= count) {
@@ -278,7 +249,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
                     else
                         if (node.x < x && node.next.x > x) {
-                            Node newNode = new Node(x, y);
+                            Node newNode = new Node();
+                            newNode.x = x;
+                            newNode.y = y;
                             newNode.prev = node;
                             newNode.next = node.next;
                             node.next = node.next.prev = newNode;
