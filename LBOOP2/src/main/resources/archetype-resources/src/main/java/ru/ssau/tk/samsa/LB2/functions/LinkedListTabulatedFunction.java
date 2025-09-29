@@ -1,6 +1,6 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
     private static class Node {
         public double x;
         public double y;
@@ -249,5 +249,47 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             current = current.next;
         }
         return current;
+    }
+
+    @Override
+    public void insert (double x, double y) {
+        if (head == null) {
+            addNode(x, y);
+            return;
+        }
+
+        else {
+            Node node = head;
+
+            if (x < node.x) {
+                addNode(x, y);
+                head = head.prev;
+                ++count;
+
+                return;
+            }
+
+            else {
+                do {
+                    if (node.x == x) {
+                        node.y = y;
+                        return;
+                    }
+
+                    else
+                        if (node.x < x && node.next.x > x) {
+                            Node newNode = new Node(x, y);
+                            newNode.prev = node;
+                            newNode.next = node.next;
+                            node.next = node.next.prev = newNode;
+                            ++count;
+
+                            return;
+                        }
+
+                    node = node.next;
+                } while (node != head);
+            }
+        }
     }
 }
