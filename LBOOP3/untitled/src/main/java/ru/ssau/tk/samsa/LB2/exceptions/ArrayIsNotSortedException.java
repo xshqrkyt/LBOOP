@@ -1,4 +1,4 @@
-package exceptions;
+package ru.ssau.tk.samsa.LB2.exceptions;
 
 public class ArrayIsNotSortedException extends RuntimeException {
     public ArrayIsNotSortedException() {}
