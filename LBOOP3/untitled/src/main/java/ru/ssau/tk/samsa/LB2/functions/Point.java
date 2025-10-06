@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.samsa.LB2.functions;
 
 public class Point {
     public final double x;
@@ -8,4 +8,5 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+
 }
