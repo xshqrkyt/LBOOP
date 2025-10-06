@@ -1,8 +1,8 @@
-package io;
+package ru.ssau.tk.samsa.LB2.io;
 
 import java.io.*;
-import functions.*;
-import functions.factory.*;
+import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.functions.factory.*;
 
 public class ArrayTabulatedFunctionSerialization {
     public static void main (String[] str) {
