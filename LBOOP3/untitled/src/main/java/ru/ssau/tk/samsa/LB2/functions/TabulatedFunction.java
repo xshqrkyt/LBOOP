@@ -1,6 +1,8 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
-public interface TabulatedFunction extends MathFunction {
+import java.lang.Iterable;
+
+public interface TabulatedFunction extends MathFunction, Iterable<Point> {
     int getCount();
     double getX(int index);
     double getY(int index);
@@ -9,4 +11,5 @@ public interface TabulatedFunction extends MathFunction {
     int indexOfY(double y);
     double leftBound();
     double rightBound();
+
 }
