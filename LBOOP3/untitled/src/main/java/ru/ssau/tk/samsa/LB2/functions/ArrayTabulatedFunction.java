@@ -1,7 +1,8 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
+import ru.ssau.tk.samsa.LB2.exceptions.*;
+
 import java.util.Arrays;
-import exceptions.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.io.Serializable;
@@ -228,3 +229,4 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         };
     }
 }
+
