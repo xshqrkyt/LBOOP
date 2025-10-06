@@ -1,13 +1,18 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
 import java.util.Arrays;
+import exceptions.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.io.Serializable;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
     protected double[] xValues;
     protected double[] yValues;
     protected int count;
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 7505690091096630414L;
+    
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2) {
             throw new IllegalArgumentException("Length of array is less than 2");
@@ -69,6 +74,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double interpolate(double x, int floorIndex) {
+        if (x < xValues[floorIndex] || xValues[floorIndex + 1] < x)
+            throw new InterpolationException("The number is not inside the interpolation interval.");
+        
         if (count == 1)
             return yValues[0];
 
@@ -192,5 +200,31 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         yValues = newyValues;
         --count;
         return;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        // throw new UnsupportedOperationException("This method has not been implemented yet.");
+
+        return new Iterator<Point>() {
+            int i = 0;
+
+            @Override
+            public boolean hasNext() {
+                if (i < count)
+                    return true;
+
+                return false;
+            }
+
+            @Override
+            public Point next() {
+                if(!hasNext())
+                    throw new NoSuchElementException("The requested item does not exist.");
+
+                else
+                    return new Point(xValues[i], yValues[i++]);
+            }
+        };
     }
 }
