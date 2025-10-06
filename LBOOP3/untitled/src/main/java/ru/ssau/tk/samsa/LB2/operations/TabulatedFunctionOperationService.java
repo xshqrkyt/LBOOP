@@ -1,8 +1,8 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.*;
-import functions.factory.*;
-import exceptions.InconsistentFunctionsException;
+import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.functions.factory.*;
+import ru.ssau.tk.samsa.LB2.exceptions.InconsistentFunctionsException;
 
 public class TabulatedFunctionOperationService {
     TabulatedFunctionFactory factory;
@@ -71,4 +71,3 @@ public class TabulatedFunctionOperationService {
         this.factory = factory;
     }
 }
-
