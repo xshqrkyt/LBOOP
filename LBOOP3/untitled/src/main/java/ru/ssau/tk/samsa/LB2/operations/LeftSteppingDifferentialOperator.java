@@ -1,6 +1,6 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.MathFunction;
+import ru.ssau.tk.samsa.LB2.functions.MathFunction;
 
 public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperator<MathFunction> {
     public LeftSteppingDifferentialOperator(double step) {
@@ -21,4 +21,5 @@ public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperat
     public double apply(double x) {
         return 0;
     }
+
 }
