@@ -1,4 +1,4 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
 public abstract class SteppingDifferentialOperator<T> implements DifferentialOperator<T> {
     protected double step;
