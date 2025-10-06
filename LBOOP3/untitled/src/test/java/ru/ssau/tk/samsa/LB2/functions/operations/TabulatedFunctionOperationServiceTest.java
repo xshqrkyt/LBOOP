@@ -1,7 +1,7 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.*;
-import functions.factory.*;
+import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.functions.factory.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -120,6 +120,7 @@ class TabulatedFunctionOperationServiceTest {
         TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {-1, 0, 1});
         TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction2, tabulatedFunction1);
     }
+
 
 
 
