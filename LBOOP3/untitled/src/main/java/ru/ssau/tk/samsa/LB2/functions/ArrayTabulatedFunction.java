@@ -44,7 +44,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         yValues[i] = source.apply(xValues[i] = xTo);
     }
 
-
     @Override
     protected int floorIndexOfX(double x) {
         if (x < xValues[0]) {
@@ -138,8 +137,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         return -1;
     }
 
-
-
     @Override
     public double leftBound() {
         return xValues[0];
@@ -229,4 +226,3 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         };
     }
 }
-
