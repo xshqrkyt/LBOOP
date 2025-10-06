@@ -75,6 +75,24 @@ public class ArrayTabulatedFunctionTest {
     }
 
     @Test
+    public void interpolateTest3() {
+        double[] xArray = {0, 0.5, 1, 1.5, 2, 2.5};
+        double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+
+        obj.interpolate(-3.6, 4);
+    }
+
+    @Test
+    public void interpolateTest4() {
+        double[] xArray = {0, 0.5, 1, 1.5, 2, 2.5};
+        double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+
+        obj.interpolate(7.5, 4);
+    }
+
+    @Test
     public void getCountTest() {
         double[] xArray = {-1.5, -0.5, 0.5, 1.5};
         double[] yArray = {1.25, -0.75, -0.75, 1.25};
@@ -197,5 +215,55 @@ public class ArrayTabulatedFunctionTest {
 
         assertEquals(newyArray[0], obj.getY(0));
         assertEquals(newyArray[1], obj.getY(1));
+    }
+
+    @Test
+    public void checkLengthIsTheSameTest() {
+        double[] xArray = {0, 1, 2};
+        double[] yArray = {0, 4};
+
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+    }
+
+    @Test
+    public void checkSortedTest() {
+        double[] xArray = {0, 3, 2};
+        double[] yArray = {0, 9, 4};
+
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+    }
+
+    @Test
+    public void iteratorTest1() {
+        double[] xArray = {0, 1, 2};
+        double[] yArray = {0, 1, 4};
+
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+        Iterator<Point> iterator = obj.iterator();
+
+        int i = 0;
+        while(iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(obj.getX(i), point.x);
+            assertEquals(obj.getY(i), point.y);
+            ++i;
+        }
+    }
+
+    @Test
+    public void iteratorTest2() {
+        double[] xArray = {0, 1, 2};
+        double[] yArray = {0, 1, 4};
+
+        ArrayTabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(xArray, yArray);
+        Iterator<Point> iterator = tabulatedFunction.iterator();
+
+        int i = 0;
+        for (Point point : tabulatedFunction) {
+            point = iterator.next();
+            assertEquals(tabulatedFunction.getX(i), point.x);
+            assertEquals(tabulatedFunction.getY(i), point.y);
+            ++i;
+        }
     }
 }
