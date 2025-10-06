@@ -1,10 +1,9 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.MathFunction;
-import functions.SqrFunction;
-import org.junit.jupiter.api.Test;
+import ru.ssau.tk.samsa.LB2.functions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class RightSteppingDifferentialOperatorTest {
     private static final double EPS = 1e-1;
