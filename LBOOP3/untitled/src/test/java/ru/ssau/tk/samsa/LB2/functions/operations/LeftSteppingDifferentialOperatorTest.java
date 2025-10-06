@@ -1,9 +1,9 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import functions.*;
+import ru.ssau.tk.samsa.LB2.functions.*;
 
 class LeftSteppingDifferentialOperatorTest {
     private static final double EPS = 1e-1;
