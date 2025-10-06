@@ -1,9 +1,8 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.MathFunction;
-import functions.SqrFunction;
+import ru.ssau.tk.samsa.LB2.functions.*;
+
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MiddleSteppingDifferentialOperatorTest {
