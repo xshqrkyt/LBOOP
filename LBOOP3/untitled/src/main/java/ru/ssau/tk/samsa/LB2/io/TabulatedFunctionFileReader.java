@@ -1,7 +1,6 @@
-package io;
+package ru.ssau.tk.samsa.LB2.io;
 
-import functions.*;
-import functions.ArrayTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.functions.*;
 import functions.factory.*;
 
 import java.io.BufferedReader;
@@ -21,9 +20,5 @@ public class TabulatedFunctionFileReader {
         catch (IOException error) {
             error.printStackTrace();
         }
-
-
-
-
     }
 }
