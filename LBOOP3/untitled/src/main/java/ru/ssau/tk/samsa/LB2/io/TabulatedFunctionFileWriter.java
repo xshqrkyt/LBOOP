@@ -1,7 +1,7 @@
-package io;
+package ru.ssau.tk.samsa.LB2.io;
 
 import java.io.*;
-import functions.*;
+import ru.ssau.tk.samsa.LB2.functions.*;
 import java.lang.String;
 
 public class TabulatedFunctionFileWriter {
