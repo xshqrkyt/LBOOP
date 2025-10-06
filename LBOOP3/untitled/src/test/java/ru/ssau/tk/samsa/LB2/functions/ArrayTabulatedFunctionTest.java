@@ -3,6 +3,8 @@ package ru.ssau.tk.samsa.LB2.functions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
+
 public class ArrayTabulatedFunctionTest {
     @Test
     public void ArrayTabulatedFunctionTest1() {
@@ -267,3 +269,4 @@ public class ArrayTabulatedFunctionTest {
         }
     }
 }
+
