@@ -21,5 +21,5 @@ public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperat
     public double apply(double x) {
         return 0;
     }
-
 }
+
