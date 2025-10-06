@@ -1,6 +1,6 @@
-package operations;
+package ru.ssau.tk.samsa.LB2.operations;
 
-import functions.MathFunction;
+import ru.ssau.tk.samsa.LB2.functions.MathFunction;
 
 public class MiddleSteppingDifferentialOperator extends SteppingDifferentialOperator<MathFunction> {
     public MiddleSteppingDifferentialOperator(double step) {
