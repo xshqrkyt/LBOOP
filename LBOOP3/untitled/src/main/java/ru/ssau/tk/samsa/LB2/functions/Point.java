@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package functions;
 
 public class Point {
     public final double x;
