@@ -2,8 +2,8 @@ package ru.ssau.tk.samsa.LB2.operations;
 
 import ru.ssau.tk.samsa.LB2.functions.Point;
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.TabulatedFunctionFactory;
 
 public class TabulatedDifferentialOperator implements DifferentialOperator<TabulatedFunction> {
     private TabulatedFunctionFactory factory;
@@ -46,4 +46,5 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
         return factory.create(xValues, yValues);
     }
+
 }
