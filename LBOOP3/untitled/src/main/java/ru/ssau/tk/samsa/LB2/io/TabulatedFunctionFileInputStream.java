@@ -2,9 +2,9 @@ package ru.ssau.tk.samsa.LB2.io;
 
 import ru.ssau.tk.samsa.LB2.functions.*;
 import ru.ssau.tk.samsa.LB2.operations.TabulatedDifferentialOperator;
-import ru.ssau.tk.samsa.LB2.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.factory.LinkedListTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.TabulatedFunctionFactory;
 
 import java.io.*;
 
@@ -65,4 +65,5 @@ public class TabulatedFunctionFileInputStream {
             }
         }
     }
+
 }
