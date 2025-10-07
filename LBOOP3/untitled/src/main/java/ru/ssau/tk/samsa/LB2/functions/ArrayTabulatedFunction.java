@@ -160,22 +160,31 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             return;
         }
 
-        int insertIndex = findInsertIndex(x);
-
-        // Увеличиваем массивы
-        xValues = Arrays.copyOf(xValues, count + 1);
-        yValues = Arrays.copyOf(yValues, count + 1);
-
-        // Сдвигаем элементы для освобождения места
-        if (insertIndex < count) {
-            System.arraycopy(xValues, insertIndex, xValues, insertIndex + 1, count - insertIndex);
-            System.arraycopy(yValues, insertIndex, yValues, insertIndex + 1, count - insertIndex);
+        // Находим позицию для вставки
+        int insertIndex = 0;
+        while (insertIndex < count && xValues[insertIndex] < x) {
+            insertIndex++;
         }
 
+        // Создаем новые массивы с увеличенным размером
+        double[] newXValues = new double[count + 1];
+        double[] newYValues = new double[count + 1];
+
+        // Копируем элементы до позиции вставки
+        System.arraycopy(xValues, 0, newXValues, 0, insertIndex);
+        System.arraycopy(yValues, 0, newYValues, 0, insertIndex);
+
         // Вставляем новый элемент
-        xValues[insertIndex] = x;
-        yValues[insertIndex] = y;
-        ++count;
+        newXValues[insertIndex] = x;
+        newYValues[insertIndex] = y;
+
+        // Копируем оставшиеся элементы
+        System.arraycopy(xValues, insertIndex, newXValues, insertIndex + 1, count - insertIndex);
+        System.arraycopy(yValues, insertIndex, newYValues, insertIndex + 1, count - insertIndex);
+
+        xValues = newXValues;
+        yValues = newYValues;
+        count++;
     }
 
     @Override
