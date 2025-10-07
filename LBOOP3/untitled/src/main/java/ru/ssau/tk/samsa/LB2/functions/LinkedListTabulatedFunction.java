@@ -58,8 +58,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         checkLengthIsTheSame(xValues, yValues);
         
-        if (xValues.length != yValues.length) {
-            throw new IllegalArgumentException("Arrays must have same length");
+        if (xValues.length < 2) {
+            throw new IllegalArgumentException("Length of array is less than 2");
         }
 
         checkSorted(xValues);
@@ -316,4 +316,5 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         ++count;
     }
 }
+
 
