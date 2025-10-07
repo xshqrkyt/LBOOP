@@ -231,10 +231,7 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void iteratorTest1() {
-        double[] xArray = {0, 1, 2};
-        double[] yArray = {0, 1, 4};
-
-        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[] {0, 1, 2}, new double[] {0, 1, 4});
         Iterator<Point> iterator = obj.iterator();
 
         int i = 0;
@@ -247,11 +244,8 @@ public class ArrayTabulatedFunctionTest {
     }
 
     @Test
-    public void iteratorTest2() {
-        double[] xArray = {0, 1, 2};
-        double[] yArray = {0, 1, 4};
-
-        ArrayTabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(xArray, yArray);
+    public void iteratorTest2() { 
+        ArrayTabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(new double[] {0, 1, 2}, new double[] {0, 1, 4});
         Iterator<Point> iterator = tabulatedFunction.iterator();
 
         int i = 0;
@@ -263,5 +257,3 @@ public class ArrayTabulatedFunctionTest {
         }
     }
 }
-
-
