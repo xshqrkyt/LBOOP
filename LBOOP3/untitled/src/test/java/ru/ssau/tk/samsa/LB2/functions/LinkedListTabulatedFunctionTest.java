@@ -145,5 +145,22 @@ public class LinkedListTabulatedFunctionTest {
     public void checkSortedTest() {
         LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(new double[] {0, 3, 2}, new double[] {0, 9, 4});
     }
-}
 
+    @Test
+    public void interpolateTest1() {
+        double[] xArray = {0, 0.5, 1, 1.5, 2, 2.5};
+        double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
+        LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(xArray, yArray);
+
+        obj.interpolate(-3.6, 4);
+    }
+
+    @Test
+    public void interpolateTest2() {
+        double[] xArray = {0, 0.5, 1, 1.5, 2, 2.5};
+        double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
+        LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(xArray, yArray);
+
+        obj.interpolate(7.5, 4);
+    }
+}
