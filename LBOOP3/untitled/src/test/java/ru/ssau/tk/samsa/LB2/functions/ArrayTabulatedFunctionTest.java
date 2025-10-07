@@ -221,18 +221,12 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void checkLengthIsTheSameTest() {
-        double[] xArray = {0, 1, 2};
-        double[] yArray = {0, 4};
-
-        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[] {0, 1, 2}, new double[] {0, 4});
     }
 
     @Test
     public void checkSortedTest() {
-        double[] xArray = {0, 3, 2};
-        double[] yArray = {0, 9, 4};
-
-        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[] {0, 3, 2}, new double[] {0, 9, 4});
     }
 
     @Test
@@ -269,4 +263,5 @@ public class ArrayTabulatedFunctionTest {
         }
     }
 }
+
 
