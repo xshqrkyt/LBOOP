@@ -62,6 +62,19 @@ public class TabulatedFunctionOperationService {
     public TabulatedFunction subtract(TabulatedFunction f1, TabulatedFunction f2) {
         return doOperation (f1, f2, (y1, y2) -> y1 - y2);
     }
+    public TabulatedFunction multiply(TabulatedFunction a, TabulatedFunction b) {
+        return doOperation(a, b, (u, v) -> u * v);
+    }
+
+    // Деление
+    public TabulatedFunction divide(TabulatedFunction a, TabulatedFunction b) {
+        return doOperation(a, b, (u, v) -> {
+            if (Math.abs(v) < 1e-10) {
+                throw new ArithmeticException("Division by zero at y = " + v);
+            }
+            return u / v;
+        });
+    }
 
     public TabulatedFunctionFactory get() {
         return factory;
