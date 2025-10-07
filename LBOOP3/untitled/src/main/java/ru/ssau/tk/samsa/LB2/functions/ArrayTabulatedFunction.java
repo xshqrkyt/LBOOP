@@ -15,9 +15,14 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     private static final long serialVersionUID = 7505690091096630414L;
     
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        checkLengthIsTheSame(xValues, yValues);
+        
         if (xValues.length < 2) {
             throw new IllegalArgumentException("Length of array is less than 2");
         }
+        
+        checkSorted(xValues);
+        
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
         this.yValues = Arrays.copyOf(yValues, count);
@@ -226,3 +231,4 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         };
     }
 }
+
