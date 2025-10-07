@@ -219,6 +219,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected double interpolate(double x, int floorIndex) {
+        if (x < getX(floorIndex) || x > getX(floorIndex + 1))
+            throw new InterpolationException("The number is not inside the interpolation interval.");
+        
         if (count == 1) {
             return head.y;
         }
@@ -313,3 +316,4 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         ++count;
     }
 }
+
