@@ -95,6 +95,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
+    @Override
     public void remove(int index) {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index out of bounds");
@@ -312,6 +313,3 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         ++count;
     }
 }
-
-
-
