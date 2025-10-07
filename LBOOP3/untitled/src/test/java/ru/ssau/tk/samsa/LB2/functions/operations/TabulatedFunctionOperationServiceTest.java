@@ -90,6 +90,47 @@ class TabulatedFunctionOperationServiceTest {
     public void addTest2() {
         TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
 
+        TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
+        TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {-1, 0, 1});
+        TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction2, tabulatedFunction1);
+    }
+
+    @Test
+    public void addTest3() {
+        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
+
+        TabulatedFunction tabulatedFunction1 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
+        TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {-1, 0, 1, 2});
+        TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction1, tabulatedFunction2);
+
+        int i = 1;
+        for (Point point : tabulatedFunction)
+            assertEquals(i++, point.x);
+
+        assertEquals(0, tabulatedFunction.getY(0));
+        assertEquals(4, tabulatedFunction.getY(1));
+        assertEquals(10, tabulatedFunction.getY(2));
+        assertEquals(18, tabulatedFunction.getY(3));
+    }
+
+    @Test
+    public void addTest4() {
+        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
+
+        TabulatedFunction tabulatedFunction1 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
+        TabulatedFunction tabulatedFunction2 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {-1, 0, 1, 2});
+        TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction1, tabulatedFunction2);
+
+        assertEquals(0, tabulatedFunction.getY(0));
+        assertEquals(4, tabulatedFunction.getY(1));
+        assertEquals(10, tabulatedFunction.getY(2));
+        assertEquals(18, tabulatedFunction.getY(3));
+    }
+
+    @Test
+    public void subtractTest1() {
+        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
+
         TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {1, 4, 9});
         TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {-1, 0, 1});
         TabulatedFunction tabulatedFunction = obj.subtract(tabulatedFunction2, tabulatedFunction1);
@@ -104,7 +145,7 @@ class TabulatedFunctionOperationServiceTest {
     }
 
     @Test
-    public void addTest3() {
+    public void subtractTest2() {
         TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
 
         TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {1, 4, 9});
@@ -113,16 +154,34 @@ class TabulatedFunctionOperationServiceTest {
     }
 
     @Test
-    public void addTest4() {
+    public void subtractTest3() {
         TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
 
         TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
-        TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {-1, 0, 1});
-        TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction2, tabulatedFunction1);
+        TabulatedFunction tabulatedFunction2 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {-1, 0, 1, 2});
+        TabulatedFunction tabulatedFunction = obj.subtract(tabulatedFunction1, tabulatedFunction2);
+
+        int i = 1;
+        for (Point point : tabulatedFunction)
+            assertEquals(i++, point.x);
+
+        assertEquals(2, tabulatedFunction.getY(0));
+        assertEquals(4, tabulatedFunction.getY(1));
+        assertEquals(8, tabulatedFunction.getY(2));
+        assertEquals(14, tabulatedFunction.getY(3));
     }
 
+    @Test
+    public void subtractTest4() {
+        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
 
-
-
-
+        TabulatedFunction tabulatedFunction1 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
+        TabulatedFunction tabulatedFunction2 = new LinkedListTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {-1, 0, 1, 2});
+        TabulatedFunction tabulatedFunction = obj.subtract(tabulatedFunction2, tabulatedFunction1);
+        
+        assertEquals(-2, tabulatedFunction.getY(0));
+        assertEquals(-4, tabulatedFunction.getY(1));
+        assertEquals(-8, tabulatedFunction.getY(2));
+        assertEquals(-14, tabulatedFunction.getY(3));
+    }
 }
