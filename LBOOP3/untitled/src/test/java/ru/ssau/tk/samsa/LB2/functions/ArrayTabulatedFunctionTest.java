@@ -256,4 +256,93 @@ public class ArrayTabulatedFunctionTest {
             ++i;
         }
     }
+    @Test
+    public void testGetXWithInvalidIndex() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2}, new double[]{1, 4});
+
+        // Отрицательный индекс
+        assertThrows(IllegalArgumentException.class, () -> obj.getX(-1));
+
+        // Индекс >= count
+        assertThrows(IllegalArgumentException.class, () -> obj.getX(2));
+        assertThrows(IllegalArgumentException.class, () -> obj.getX(10));
+    }
+
+    @Test
+    public void testGetYWithInvalidIndex() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2}, new double[]{1, 4});
+        assertThrows(IllegalArgumentException.class, () -> obj.getY(-1));
+        assertThrows(IllegalArgumentException.class, () -> obj.getY(2));
+    }
+
+    @Test
+    public void testSetYWithInvalidIndex() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2}, new double[]{1, 4});
+        assertThrows(IllegalArgumentException.class, () -> obj.setY(-1, 5.0));
+        assertThrows(IllegalArgumentException.class, () -> obj.setY(2, 5.0));
+    }
+    @Test
+    public void testConstructorWithLessThan2Points() {
+        // Меньше 2 точек
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ArrayTabulatedFunction(new double[]{1}, new double[]{1});
+        });
+
+        // Пустые массивы
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ArrayTabulatedFunction(new double[]{}, new double[]{});
+        });
+    }
+
+    @Test
+    public void testConstructorWithFunctionInvalidCount() {
+        MathFunction f = new SqrFunction();
+
+        // count < 2
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ArrayTabulatedFunction(f, 0, 1, 1);
+        });
+
+        // count = 0
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ArrayTabulatedFunction(f, 0, 1, 0);
+        });
+    }
+    @Test
+    public void testFloorIndexOfXWithXLessThanLeftBound() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
+
+        // x меньше левой границы
+        assertThrows(IllegalArgumentException.class, () -> obj.floorIndexOfX(0.5));
+    }
+    @Test
+    public void testInterpolateWithInvalidFloorIndex() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
+
+        // Невалидный floorIndex
+        assertThrows(InterpolationException.class, () -> obj.interpolate(1.5, -1));
+        assertThrows(InterpolationException.class, () -> obj.interpolate(1.5, 2));
+    }
+    @Test
+    public void testRemoveWithInvalidIndex() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
+
+        assertThrows(IllegalArgumentException.class, () -> obj.remove(-1));
+        assertThrows(IllegalArgumentException.class, () -> obj.remove(3));
+
+        // Проверка, что после удаления нельзя оставить меньше 2 точек
+        obj.remove(1); // теперь 2 точки
+        assertThrows(IllegalArgumentException.class, () -> obj.remove(0)); // останется 1 точка
+    }
+    @Test
+    public void testInsertWithInvalidParameters() {
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 3}, new double[]{1, 9});
+
+        // NaN значения
+        assertThrows(IllegalArgumentException.class, () -> obj.insert(Double.NaN, 5.0));
+        assertThrows(IllegalArgumentException.class, () -> obj.insert(2.0, Double.NaN));
+
+        // Бесконечности
+        assertThrows(IllegalArgumentException.class, () -> obj.insert(Double.POSITIVE_INFINITY, 5.0));
+    }
 }
