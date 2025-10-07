@@ -3,6 +3,7 @@ package ru.ssau.tk.samsa.LB2.io;
 import java.io.*;
 import ru.ssau.tk.samsa.LB2.functions.*;
 import ru.ssau.tk.samsa.LB2.functions.factory.*;
+import ru.ssau.tk.samsa.LB2.operations.TabulatedDifferentialOperator;
 
 public class ArrayTabulatedFunctionSerialization {
     public static void main (String[] str) {
@@ -21,9 +22,9 @@ public class ArrayTabulatedFunctionSerialization {
         }
 
         try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream("output/serialized array functions.bin"))) {
-            System.out.println(toString(FunctionsIO.deserialize(stream)));
-            System.out.println(toString(FunctionsIO.deserialize(stream)));
-            System.out.println(toString(FunctionsIO.deserialize(stream)));
+            System.out.println(stream.toString(FunctionsIO.deserialize(stream)));
+            System.out.println(stream.toString(FunctionsIO.deserialize(stream)));
+            System.out.println(stream.toString(FunctionsIO.deserialize(stream)));
         }
 
         catch (IOException | ClassNotFoundException error) {
@@ -31,3 +32,4 @@ public class ArrayTabulatedFunctionSerialization {
         }
     }
 }
+
