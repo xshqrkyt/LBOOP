@@ -135,4 +135,20 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(2.0, function.getX(2), 1e-10);
         // После последнего должен идти первый
     }
+
+    @Test
+    public void checkLengthIsTheSameTest() {
+        double[] xArray = {0, 1, 2};
+        double[] yArray = {0, 4};
+
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+    }
+
+    @Test
+    public void checkSortedTest() {
+        double[] xArray = {0, 3, 2};
+        double[] yArray = {0, 9, 4};
+
+        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
+    }
 }
