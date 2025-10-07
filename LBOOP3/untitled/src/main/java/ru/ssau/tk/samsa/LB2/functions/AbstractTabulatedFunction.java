@@ -29,6 +29,7 @@ public abstract class AbstractTabulatedFunction implements MathFunction, Tabulat
 
         return builder.toString();
     }
+    
     @Override
     public double apply(double x) {
         if (x < leftBound())
@@ -59,3 +60,4 @@ public abstract class AbstractTabulatedFunction implements MathFunction, Tabulat
         }
     }
 }
+
