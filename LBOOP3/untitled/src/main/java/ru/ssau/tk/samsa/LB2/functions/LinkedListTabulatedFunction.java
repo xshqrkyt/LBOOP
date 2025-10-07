@@ -1,6 +1,12 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Insertable {
+import ru.ssau.tk.samsa.LB2.exceptions.*;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.io.Serializable;
+
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
     private static class Node {
         private static final long serialVersionUID = 1L;
         public double x;
@@ -8,8 +14,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         public Node next;
         public Node prev;
     }
-
-
 
     private Node head;
     private int count;
@@ -308,5 +312,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         ++count;
     }
 }
+
 
 
