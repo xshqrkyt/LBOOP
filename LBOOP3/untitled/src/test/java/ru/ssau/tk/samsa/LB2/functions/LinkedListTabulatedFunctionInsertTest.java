@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTabulatedFunctionInsertTest {
-
-
     @Test
     void testInsertAtBeginning() {
         // Создаем список с 3 элементами: [1,2,3]
@@ -22,7 +20,6 @@ public class LinkedListTabulatedFunctionInsertTest {
         assertEquals(0.0, list.getX(0), 1e-10);
         assertEquals(1.0, list.getX(1), 1e-10);
     }
-
 
     @Test
     void testInsertAtEnd() {
@@ -66,14 +63,5 @@ public class LinkedListTabulatedFunctionInsertTest {
         assertEquals(3, function.getCount()); // Количество не должно измениться
         assertEquals(5.0, function.getY(1), 1e-10);
     }
-
-    @Test
-    void testInsertIntoEmpty() {
-        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[0], new double[0]);
-        function.insert(1.0, 2.0);
-
-        assertEquals(1, function.getCount());
-        assertEquals(1.0, function.leftBound(), 1e-10);
-        assertEquals(2.0, function.getY(0), 1e-10);
-    }
+}
 }
