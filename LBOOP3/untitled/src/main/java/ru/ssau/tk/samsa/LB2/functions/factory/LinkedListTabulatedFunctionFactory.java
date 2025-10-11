@@ -1,6 +1,4 @@
-// LinkedListTabulatedFunctionFactory
 package ru.ssau.tk.samsa.LB2.factory;
-
 
 import ru.ssau.tk.samsa.LB2.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
