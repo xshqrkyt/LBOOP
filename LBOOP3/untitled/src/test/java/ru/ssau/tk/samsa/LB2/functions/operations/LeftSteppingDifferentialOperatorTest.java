@@ -8,7 +8,6 @@ import ru.ssau.tk.samsa.LB2.functions.*;
 class LeftSteppingDifferentialOperatorTest {
     private static final double EPS = 1e-1;
     private static final double STEP = 1e-3;
-
     private final MathFunction sqrFunction = new SqrFunction(); // f(x) = x^2
 
     @Test
@@ -22,10 +21,6 @@ class LeftSteppingDifferentialOperatorTest {
 
     @Test
     void deriveTest2() {
-        LeftSteppingDifferentialOperator obj = new LeftSteppingDifferentialOperator(-0.01);
-        MathFunction derivative = obj.derive(sqrFunction);
-
-        double x = 2.0;
-        assertEquals(2 * x, derivative.apply(x), EPS);
+        assertThrows(IllegalArgumentException.class, () -> new LeftSteppingDifferentialOperator(-0.01));
     }
 }
