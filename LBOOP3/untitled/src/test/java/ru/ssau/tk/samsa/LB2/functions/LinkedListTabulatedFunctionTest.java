@@ -1,11 +1,14 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedListTabulatedFunctionTest {
+import ru.ssau.tk.samsa.LB2.exceptions.*;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class LinkedListTabulatedFunctionTest {
     @Test
     void testConstructorWithArrays() {
         double[] xValues = {0.0, 1.0, 2.0, 3.0};
@@ -108,21 +111,18 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(2.5, function.apply(1.5), 1e-10);
 
         // Экстраполяция слева
-        assertEquals(-1.0, function.apply(-1.0), 1e-10);
-
+        assertThrows(InterpolationException.class, () -> function.apply(-1.0));
+        
         // Экстраполяция справа
-        assertEquals(7.0, function.apply(3.0), 1e-10);
+        assertThrows(InterpolationException.class, () -> function.apply(3.0));
     }
 
     @Test
     void testSinglePointFunction() {
         double[] xValues = {2.0};
         double[] yValues = {4.0};
-        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xValues, yValues);
-
-        assertEquals(4.0, function.apply(0.0), 1e-10);
-        assertEquals(4.0, function.apply(2.0), 1e-10);
-        assertEquals(4.0, function.apply(5.0), 1e-10);
+        
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(xValues, yValues));
     }
 
     @Test
@@ -139,12 +139,12 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void checkLengthIsTheSameTest() {
-        LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(new double[]{0, 1, 2}, new double[]{0, 4});
+        assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{0, 1, 2}, new double[]{0, 4}));
     }
 
     @Test
     public void checkSortedTest() {
-        LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(new double[]{0, 3, 2}, new double[]{0, 9, 4});
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{0, 3, 2}, new double[]{0, 9, 4}));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
         LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(xArray, yArray);
 
-        obj.interpolate(-3.6, 4);
+        assertThrows(InterpolationException.class, () -> obj.interpolate(-3.6, 4));
     }
 
     @Test
@@ -162,7 +162,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
         LinkedListTabulatedFunction obj = new LinkedListTabulatedFunction(xArray, yArray);
 
-        obj.interpolate(7.5, 4);
+        assertThrows(InterpolationException.class, () -> obj.interpolate(7.5, 4));
     }
 
     // Тесты на конструкторы с исключениями
@@ -313,7 +313,7 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xValues, yValues);
 
         // Интерполяция с невалидным floorIndex
-        assertThrows(InterpolationException.class, () -> function.interpolate(0.5, -1));
+        assertThrows(IllegalArgumentException.class, () -> function.interpolate(0.5, -1));
         assertThrows(InterpolationException.class, () -> function.interpolate(0.5, 2));
     }
 
@@ -330,7 +330,7 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(4.0, function.getY(1));
             function.setY(1, 5.0);
             assertEquals(5.0, function.getY(1));
-            assertEquals(1, function.floorIndexOfX(1.5));
+            assertEquals(0, function.floorIndexOfX(1.5));
             function.insert(1.5, 2.25);
             assertEquals(4, function.getCount());
         });
@@ -386,4 +386,3 @@ public class LinkedListTabulatedFunctionTest {
                 "Should throw NoSuchElementException when no more elements");
     }
 }
-
