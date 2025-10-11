@@ -89,7 +89,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] yValues = {0.0, 1.0, 4.0, 9.0};
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xValues, yValues);
 
-        assertEquals(0, function.floorIndexOfX(-0.5)); // Левее всех
+        assertThrows(IllegalArgumentException.class, () -> function.floorIndexOfX(-0.5)); // Левее всех
         assertEquals(0, function.floorIndexOfX(0.0));  // Точно на первом элементе
         assertEquals(0, function.floorIndexOfX(0.5));  // Между 0 и 1
         assertEquals(1, function.floorIndexOfX(1.5));  // Между 1 и 2
@@ -386,3 +386,4 @@ public class LinkedListTabulatedFunctionTest {
                 "Should throw NoSuchElementException when no more elements");
     }
 }
+
