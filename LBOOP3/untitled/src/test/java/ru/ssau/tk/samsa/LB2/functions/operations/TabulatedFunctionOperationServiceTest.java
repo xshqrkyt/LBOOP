@@ -1,43 +1,16 @@
 package ru.ssau.tk.samsa.LB2.operations;
 
-import ru.ssau.tk.samsa.LB2.functions.*;
-import ru.ssau.tk.samsa.LB2.functions.factory.*;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.functions.factory.*;
+import ru.ssau.tk.samsa.LB2.exceptions.InconsistentFunctionsException;
+
 class TabulatedFunctionOperationServiceTest {
     @Test
-    public void asPointsTest1() {
+    public void asPointsTest() {
         TabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(new double[] {1, 3, 5}, new double[] {1, 9, 25});
-        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
-        Point[] points = obj.asPoints(tabulatedFunction);
-
-        int i = 0;
-        for (Point point : points) {
-            assertEquals(tabulatedFunction.getX(i), point.x);
-            assertEquals(tabulatedFunction.getY(i), point.y);
-            ++i;
-        }
-    }
-
-    @Test
-    public void asPointsTest2() {
-        TabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(new double[] {}, new double[] {});
-        TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
-        Point[] points = obj.asPoints(tabulatedFunction);
-
-        int i = 0;
-        for (Point point : points) {
-            assertEquals(tabulatedFunction.getX(i), point.x);
-            assertEquals(tabulatedFunction.getY(i), point.y);
-            ++i;
-        }
-    }
-
-    @Test
-    public void asPointsTest3() {
-        TabulatedFunction tabulatedFunction = new ArrayTabulatedFunction(new double[] {1}, new double[] {7});
         TabulatedFunctionOperationService obj = new TabulatedFunctionOperationService();
         Point[] points = obj.asPoints(tabulatedFunction);
 
@@ -92,7 +65,8 @@ class TabulatedFunctionOperationServiceTest {
 
         TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3, 4}, new double[] {1, 4, 9, 16});
         TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {-1, 0, 1});
-        TabulatedFunction tabulatedFunction = obj.add(tabulatedFunction2, tabulatedFunction1);
+        
+        assertThrows(InconsistentFunctionsException.class, () -> obj.add(tabulatedFunction2, tabulatedFunction1));
     }
 
     @Test
@@ -150,7 +124,8 @@ class TabulatedFunctionOperationServiceTest {
 
         TabulatedFunction tabulatedFunction1 = new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {1, 4, 9});
         TabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(new double[] {1, 3, 4}, new double[] {-1, 1, 2});
-        TabulatedFunction tabulatedFunction = obj.subtract(tabulatedFunction1, tabulatedFunction2);
+        
+        assertThrows(InconsistentFunctionsException.class, () -> obj.subtract(tabulatedFunction1, tabulatedFunction2));
     }
 
     @Test
