@@ -1,7 +1,5 @@
 package ru.ssau.tk.samsa.LB2.functions;
 
-import java.util.Arrays;
-
 public class DeBoorFunction implements MathFunction {
     private final double[] knots;
     private final double[] controlPoints;
@@ -121,4 +119,5 @@ public class DeBoorFunction implements MathFunction {
     public int getDegree() {
         return degree;
     }
+
 }
