@@ -17,7 +17,6 @@ public final class FunctionsIO {
         PrintWriter printWriter = new PrintWriter(writer);
         printWriter.println(function.getCount());
 
-        Iterator<Point> iterator = function.iterator();
         for (Point point : function)
             printWriter.printf("%f %f\n", point.x, point.y);
 
