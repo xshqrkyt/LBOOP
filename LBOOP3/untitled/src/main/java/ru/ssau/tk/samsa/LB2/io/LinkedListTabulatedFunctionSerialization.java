@@ -51,5 +51,4 @@ public class LinkedListTabulatedFunctionSerialization {
             e.printStackTrace();
         }
     }
-
 }
