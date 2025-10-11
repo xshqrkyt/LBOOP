@@ -2,8 +2,8 @@ package ru.ssau.tk.samsa.LB2.operations;
 
 import ru.ssau.tk.samsa.LB2.functions.Point;
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.factory.TabulatedFunctionFactory;
 
 public class TabulatedDifferentialOperator implements DifferentialOperator<TabulatedFunction> {
     private TabulatedFunctionFactory factory;
@@ -24,8 +24,6 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         this.factory = factory;
     }
 
-
-
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
         this.currentFunction = function;
@@ -42,7 +40,6 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     }
 
     private TabulatedFunction calculateDerivative(TabulatedFunction function) {
-
         Point[] points = TabulatedFunctionOperationService.asPoints(function);
         int count = points.length;
         double[] xValues = new double[count];
@@ -59,5 +56,4 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
         return factory.create(xValues, yValues);
     }
-}
 }
