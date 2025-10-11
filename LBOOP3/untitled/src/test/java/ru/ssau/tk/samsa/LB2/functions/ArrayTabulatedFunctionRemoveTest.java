@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayTabulatedFunctionRemoveTest {
-
     @Test
     void testRemoveFirst() {
         double[] xValues = {0.0, 1.0, 2.0, 3.0};
@@ -52,9 +51,6 @@ public class ArrayTabulatedFunctionRemoveTest {
         double[] yValues = {4.0};
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
-        function.remove(0);
-
-        assertEquals(0, function.getCount());
-        // После удаления единственного элемента функция становится пустой
+        assertThrows(IllegalArgumentException.class, () -> function.remove(0));
     }
 }
