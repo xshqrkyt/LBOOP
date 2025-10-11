@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ru.ssau.tk.samsa.LB2.functions.*;
 
-
 class MiddleSteppingDifferentialOperatorTest {
     private static final double EPS = 1e-1;
     private static final double STEP = 1e-3;
