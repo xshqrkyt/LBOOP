@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.factory;
+package ru.ssau.tk.samsa.LB2.functions.factory;
 
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
 
