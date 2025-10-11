@@ -69,9 +69,9 @@ public class TabulatedFunctionOperationService {
     // Деление
     public TabulatedFunction divide(TabulatedFunction a, TabulatedFunction b) {
         return doOperation(a, b, (u, v) -> {
-            if (Math.abs(v) < 1e-10) {
+            if (Math.abs(v) < 1e-10)
                 throw new ArithmeticException("Division by zero at y = " + v);
-            }
+
             return u / v;
         });
     }
