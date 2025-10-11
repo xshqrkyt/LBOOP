@@ -1,4 +1,3 @@
-// ArrayTabulatedFunctionFactory
 package ru.ssau.tk.samsa.LB2.factory;
 
 import ru.ssau.tk.samsa.LB2.functions.ArrayTabulatedFunction;
@@ -10,4 +9,3 @@ public class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory {
         return new ArrayTabulatedFunction(xValues, yValues);
     }
 }
-
