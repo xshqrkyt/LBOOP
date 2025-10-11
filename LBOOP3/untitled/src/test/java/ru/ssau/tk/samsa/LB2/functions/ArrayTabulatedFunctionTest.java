@@ -3,6 +3,8 @@ package ru.ssau.tk.samsa.LB2.functions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ru.ssau.tk.samsa.LB2.exceptions.*;
+
 import java.util.Iterator;
 
 public class ArrayTabulatedFunctionTest {
@@ -33,7 +35,7 @@ public class ArrayTabulatedFunctionTest {
         MathFunction f = new ConstantFunction(0.5);
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(f, xFrom, xTo, 5);
 
-        assertEquals(0, obj.floorIndexOfX(-10));
+        assertThrows(IllegalArgumentException.class, () -> obj.floorIndexOfX(-10));
         assertEquals(5, obj.floorIndexOfX(7.5));
         assertEquals(3, obj.floorIndexOfX(0.75));
         assertEquals(4, obj.floorIndexOfX(0.8));
@@ -82,7 +84,7 @@ public class ArrayTabulatedFunctionTest {
         double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
 
-        obj.interpolate(-3.6, 4);
+        assertThrows(InterpolationException.class, () -> obj.interpolate(-3.6, 4));
     }
 
     @Test
@@ -91,7 +93,7 @@ public class ArrayTabulatedFunctionTest {
         double[] yArray = {0, 0.7071, 1, 1.2247, 1.4142, 1.5811};
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(xArray, yArray);
 
-        obj.interpolate(7.5, 4);
+        assertThrows(InterpolationException.class, () -> obj.interpolate(7.5, 4));
     }
 
     @Test
@@ -221,12 +223,12 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void checkLengthIsTheSameTest() {
-        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[] {0, 1, 2}, new double[] {0, 4});
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[] {0, 1, 2}, new double[] {0, 4}));
     }
 
     @Test
     public void checkSortedTest() {
-        ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[] {0, 3, 2}, new double[] {0, 9, 4});
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[] {0, 3, 2}, new double[] {0, 9, 4}));
     }
 
     @Test
@@ -256,6 +258,7 @@ public class ArrayTabulatedFunctionTest {
             ++i;
         }
     }
+    
     @Test
     public void testGetXWithInvalidIndex() {
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2}, new double[]{1, 4});
@@ -281,6 +284,7 @@ public class ArrayTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> obj.setY(-1, 5.0));
         assertThrows(IllegalArgumentException.class, () -> obj.setY(2, 5.0));
     }
+    
     @Test
     public void testConstructorWithLessThan2Points() {
         // Меньше 2 точек
@@ -308,6 +312,7 @@ public class ArrayTabulatedFunctionTest {
             new ArrayTabulatedFunction(f, 0, 1, 0);
         });
     }
+    
     @Test
     public void testFloorIndexOfXWithXLessThanLeftBound() {
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
@@ -315,25 +320,28 @@ public class ArrayTabulatedFunctionTest {
         // x меньше левой границы
         assertThrows(IllegalArgumentException.class, () -> obj.floorIndexOfX(0.5));
     }
+    
     @Test
     public void testInterpolateWithInvalidFloorIndex() {
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
 
         // Невалидный floorIndex
-        assertThrows(InterpolationException.class, () -> obj.interpolate(1.5, -1));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> obj.interpolate(1.5, -1));
         assertThrows(InterpolationException.class, () -> obj.interpolate(1.5, 2));
     }
+    
     @Test
     public void testRemoveWithInvalidIndex() {
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 2, 3}, new double[]{1, 4, 9});
 
-        assertThrows(IllegalArgumentException.class, () -> obj.remove(-1));
-        assertThrows(IllegalArgumentException.class, () -> obj.remove(3));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> obj.remove(-1));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> obj.remove(3));
 
         // Проверка, что после удаления нельзя оставить меньше 2 точек
         obj.remove(1); // теперь 2 точки
         assertThrows(IllegalArgumentException.class, () -> obj.remove(0)); // останется 1 точка
     }
+    
     @Test
     public void testInsertWithInvalidParameters() {
         ArrayTabulatedFunction obj = new ArrayTabulatedFunction(new double[]{1, 3}, new double[]{1, 9});
