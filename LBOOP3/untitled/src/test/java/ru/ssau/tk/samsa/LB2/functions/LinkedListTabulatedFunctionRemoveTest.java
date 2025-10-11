@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTabulatedFunctionRemoveTest {
-
     @Test
     void testRemoveFirst() {
         double[] xValues = {0.0, 1.0, 2.0, 3.0};
@@ -47,27 +46,11 @@ public class LinkedListTabulatedFunctionRemoveTest {
     }
 
     @Test
-    void testRemoveSingleElement() {
-        double[] xValues = {2.0};
-        double[] yValues = {4.0};
-        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xValues, yValues);
-
-        function.remove(0);
-
-        assertEquals(0, function.getCount());
-        // После удаления единственного элемента функция становится пустой
-    }
-
-    @Test
     void testRemoveFromTwoElements() {
         double[] xValues = {1.0, 2.0};
         double[] yValues = {1.0, 4.0};
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xValues, yValues);
 
-        function.remove(0);
-
-        assertEquals(1, function.getCount());
-        assertEquals(2.0, function.leftBound(), 1e-10);
-        assertEquals(2.0, function.rightBound(), 1e-10);
+        assertThrows(IllegalArgumentException.class, () -> function.remove(0));
     }
 }
