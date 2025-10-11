@@ -64,4 +64,3 @@ public class LinkedListTabulatedFunctionInsertTest {
         assertEquals(5.0, function.getY(1), 1e-10);
     }
 }
-}
