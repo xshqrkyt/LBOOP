@@ -17,9 +17,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         checkLengthIsTheSame(xValues, yValues);
         
-        if (xValues.length < 2) {
+        if (xValues.length < 2)
             throw new IllegalArgumentException("Length of array is less than 2");
-        }
         
         checkSorted(xValues);
         
@@ -29,6 +28,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (count < 2)
+            throw new IllegalArgumentException("Count of points is less than 2");
+        
         this.count = count;
         xValues = new double[count];
         yValues = new double[count];
@@ -51,9 +53,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) {
+        if (x < xValues[0])
             throw new IllegalArgumentException("x = " + x + " is less than left bound " + xValues[0]);
-        }
 
         else if (xValues[count - 1] < x)
             return count;
@@ -81,9 +82,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     protected double interpolate(double x, int floorIndex) {
         if (x < xValues[floorIndex] || xValues[floorIndex + 1] < x)
             throw new InterpolationException("The number is not inside the interpolation interval.");
-        
-        if (count == 1)
-            return yValues[0];
 
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
@@ -100,25 +98,25 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double getX(int index) {
-        if (index < 0 || index >= count) {
+        if (index < 0 || index >= count)
             throw new IllegalArgumentException("Index " + index + " is out of bounds [0, " + (count-1) + "]");
-        }
+        
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
-        if (index < 0 || index >= count) {
+        if (index < 0 || index >= count)
             throw new IllegalArgumentException("Index " + index + " is out of bounds [0, " + (count-1) + "]");
-        }
+
         return yValues[index];
     }
 
     @Override
     public void setY(int index, double value) {
-        if (index < 0 || index >= count) {
+        if (index < 0 || index >= count)
             throw new IllegalArgumentException("Index " + index + " is out of bounds [0, " + (count-1) + "]");
-        }
+
         yValues[index] = value;
     }
 
@@ -154,6 +152,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void insert(double x, double y) {
+        if (Double.isNaN(x) || Double.isNaN(y) || Double.isInfinite(x) || Double.isInfinite(y))
+            throw new IllegalArgumentException("Incorrect value.");
+        
         int existingIndex = indexOfX(x);
         if (existingIndex != -1) {
             setY(existingIndex, y);
@@ -189,6 +190,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void remove(int index) {
+        if (count == 2)
+            throw new IllegalArgumentException("Length of array is 2");
+        
         double[] newxValues = new double[count - 1];
         double[] newyValues = new double[count - 1];
 
@@ -211,6 +215,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         xValues = newxValues;
         yValues = newyValues;
         --count;
+        
         return;
     }
 
@@ -240,4 +245,3 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         };
     }
 }
-
