@@ -4,6 +4,7 @@ import ru.ssau.tk.samsa.LB2.functions.Point;
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
 import ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.samsa.LB2.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.concurrent.SynchronizedTabulatedFunction;
 
 public class TabulatedDifferentialOperator implements DifferentialOperator<TabulatedFunction> {
     private TabulatedFunctionFactory factory;
@@ -26,17 +27,12 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
-        this.currentFunction = function;
-        this.currentDerivative = calculateDerivative(function);
-        return currentDerivative;
+        return calculateDerivative(function);
     }
 
     @Override
     public double apply(double x) {
-        if (currentDerivative == null) {
-            throw new IllegalStateException("Сначала нужно вызвать derive()");
-        }
-        return currentDerivative.apply(x);
+        throw new IllegalStateException("Нужно вызвать derive()");
     }
 
     private TabulatedFunction calculateDerivative(TabulatedFunction function) {
@@ -55,5 +51,12 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         yValues[count - 1] = yValues[count - 2];
 
         return factory.create(xValues, yValues);
+    }
+
+    public synchronized TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        if (!(function instanceof SynchronizedTabulatedFunction))
+            function = new SynchronizedTabulatedFunction(function);
+
+        return ((SynchronizedTabulatedFunction)function).doSynchronously(f -> derive(f));
     }
 }
