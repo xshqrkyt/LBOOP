@@ -4,6 +4,7 @@ import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
 
 public class MultiplyingTask implements Runnable {
     private TabulatedFunction function;
+    private boolean end = false;
 
     public MultiplyingTask(TabulatedFunction function) {
         this.function = function;
@@ -17,5 +18,10 @@ public class MultiplyingTask implements Runnable {
             }
 
         System.out.println("This thread has completed the task.");
+        end = true;
+    }
+
+    public boolean isEnd() {
+        return end;
     }
 }
