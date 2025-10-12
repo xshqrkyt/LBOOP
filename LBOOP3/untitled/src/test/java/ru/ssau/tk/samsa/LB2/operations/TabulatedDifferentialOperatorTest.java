@@ -1,12 +1,13 @@
 package ru.ssau.tk.samsa.LB2.operations;
 
-import ru.ssau.tk.samsa.LB2.functions.*;
-import ru.ssau.tk.samsa.LB2.functions.factory.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class TabulatedDifferentialOperatorTest {
+import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.functions.factory.*;
+import ru.ssau.tk.samsa.LB2.concurrent.SynchronizedTabulatedFunction;
 
+class TabulatedDifferentialOperatorTest {
     @Test
     void testDeriveWithDifferentFactoryCombinations() {
         // Исходные данные
@@ -122,5 +123,29 @@ class TabulatedDifferentialOperatorTest {
 
         assertSame(newFactory, operator.getFactory(),
                 "Factory should be changed after setFactory()");
+    }
+
+    @Test
+    public void deriveSynchronouslyTest1() {
+        TabulatedFunction f = new LinkedListTabulatedFunction(new double[] {0.5, 1.0, 1.5, 2.0}, new double[] {0.25, 1.0, 2.25, 4.0});
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
+
+        TabulatedFunction derf = operator.derive(f);
+        TabulatedFunction derSf = operator.deriveSynchronously(f);
+
+        for (int i = 0; i < 4; ++i)
+            assertEquals(derf.getY(i), derSf.getY(i));
+    }
+
+    @Test
+    public void deriveSynchronouslyTest2() {
+        SynchronizedTabulatedFunction sf = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(new double[] {0.5, 1.0, 1.5, 2.0}, new double[] {0.25, 1.0, 2.25, 4.0}));
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
+
+        TabulatedFunction derf = operator.derive(sf);
+        TabulatedFunction derSf = operator.deriveSynchronously(sf);
+
+        for (int i = 0; i < 4; ++i)
+            assertEquals(derf.getY(i), derSf.getY(i));
     }
 }
