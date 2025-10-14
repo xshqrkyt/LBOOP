@@ -1,8 +1,8 @@
-package samsa.concurrent;
+package ru.ssau.tk.samsa.LB2.concurrent;
 
-import samsa.functions.ConstantFunction;
-import samsa.functions.TabulatedFunction;
-import samsa.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.functions.ConstantFunction;
+import ru.ssau.tk.samsa.LB2.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.factory.LinkedListTabulatedFunctionFactory;
 
 public class ReadWriteTaskExecutor {
     public static void main(String[] args) {
