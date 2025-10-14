@@ -36,7 +36,7 @@ public class TabulatedDifferentialOperator {
     public TabulatedFunction derive(TabulatedFunction function) {
         int n = function.getCount();
         if (n < 2) {
-            // тривиальный случай: вернём копию через фабрику или новую реализацию
+
             double[] xs = new double[n];
             double[] ys = new double[n];
             for (int i = 0; i < n; i++) {
@@ -67,12 +67,12 @@ public class TabulatedDifferentialOperator {
         // Последняя точка — левая разность (повтор предыдущей производной)
         yValues[n - 1] = yValues[n - 2];
 
-        // Возвращаем созданную функци через фабрику (с fallback'ами)
+        // Возвращаем созданную функци через фабрику (с fallback)
         return createWithFactoryOrFallback(xValues, yValues);
     }
 
     private TabulatedFunction createWithFactoryOrFallback(double[] xValues, double[] yValues) {
-        // Попытка 1: вызвать factory.create(double[], double[]) если такой метод есть
+        // Попытка вызвать factory.create(double[], double[]) если такой метод есть
         try {
             Method m = factory.getClass().getMethod("create", double[].class, double[].class);
             if (m != null) {
@@ -82,13 +82,11 @@ public class TabulatedDifferentialOperator {
                 }
             }
         } catch (NoSuchMethodException ignored) {
-            // метод не найден — это нормально, попробуем другие варианты
         } catch (Exception ex) {
-            // если отражение упало — печатаем и продолжим fallback
             ex.printStackTrace();
         }
 
-        // Попытка 2: вызвать factory.create(TabulatedFunction) если есть (передадим временную реализацию)
+        // Попытка 2 вызвать factory.create(TabulatedFunction) если есть 
         try {
             Method m2 = null;
             for (Method mm : factory.getClass().getMethods()) {
