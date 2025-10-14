@@ -1,7 +1,7 @@
 package ru.ssau.tk.samsa.LB2.concurrent;
 
 import ru.ssau.tk.samsa.LB2.functions.ConstantFunction;
-import ru.ssau.tk.samsa.LB2.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
 import ru.ssau.tk.samsa.LB2.factory.LinkedListTabulatedFunctionFactory;
 
 public class ReadWriteTaskExecutor {
