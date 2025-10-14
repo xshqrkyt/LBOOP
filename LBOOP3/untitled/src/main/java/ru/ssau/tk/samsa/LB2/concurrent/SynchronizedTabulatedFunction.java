@@ -2,8 +2,10 @@ package ru.ssau.tk.samsa.LB2.concurrent;
 
 import ru.ssau.tk.samsa.LB2.functions.Point;
 import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.operations.TabulatedFunctionOperationService;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
     private TabulatedFunction function;
@@ -90,4 +92,5 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
             return operation.apply(this);
         }
     }
+
 }
