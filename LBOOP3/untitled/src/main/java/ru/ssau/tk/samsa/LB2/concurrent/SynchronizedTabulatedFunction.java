@@ -59,7 +59,26 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
 
     @Override
     public synchronized Iterator<Point> iterator() {
-        return function.iterator();
+        // Получаем копию всех точек функции
+        Point[] pointsCopy = TabulatedFunctionOperationService.asPoints(function);
+
+        // Возвращаем итератор по копии, а не по "живым" данным
+        return new Iterator<Point>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < pointsCopy.length;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return pointsCopy[index++];
+            }
+        };
     }
 
     public interface Operation<T> {
