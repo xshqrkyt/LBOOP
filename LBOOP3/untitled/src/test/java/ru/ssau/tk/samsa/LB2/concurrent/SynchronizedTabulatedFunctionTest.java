@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ru.ssau.tk.samsa.LB2.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.samsa.LB2.functions.Point;
+import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
+
+import java.util.Iterator;
 
 public class SynchronizedTabulatedFunctionTest {
     @Test
@@ -137,4 +140,5 @@ public class SynchronizedTabulatedFunctionTest {
 
         assertEquals(9, f.doSynchronously(oper));
     }
+
 }
