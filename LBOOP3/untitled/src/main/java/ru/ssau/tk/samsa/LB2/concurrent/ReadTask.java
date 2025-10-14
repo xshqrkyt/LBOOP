@@ -1,6 +1,6 @@
-package samsa.concurrent;
+package ru.ssau.tk.samsa.LB2.concurrent;
 
-import samsa.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.TabulatedFunction;
 import java.util.Locale;
 
 public class ReadTask implements Runnable {
