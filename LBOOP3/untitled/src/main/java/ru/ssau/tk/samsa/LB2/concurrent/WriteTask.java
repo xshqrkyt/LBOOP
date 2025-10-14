@@ -1,6 +1,6 @@
-package samsa.concurrent;
+package ru.ssau.tk.samsa.LB2.concurrent;
 
-import samsa.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
 
 public class WriteTask implements Runnable {
     private final TabulatedFunction function;
