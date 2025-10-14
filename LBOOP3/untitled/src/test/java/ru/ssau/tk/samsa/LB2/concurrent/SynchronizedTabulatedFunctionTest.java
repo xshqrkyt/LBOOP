@@ -14,6 +14,22 @@ public class SynchronizedTabulatedFunctionTest {
     }
 
     @Test
+    public void testIteratorReturnsSnapshot() {
+        TabulatedFunction base = new ArrayTabulatedFunction(new double[]{1,2,3}, new double[]{10,20,30});
+        SynchronizedTabulatedFunction sync = new SynchronizedTabulatedFunction(base);
+
+        Iterator<Point> it = sync.iterator();
+
+        // Модифицируем исходную функцию после получения итератора
+        base.setY(0, 999);
+
+        // Проверяем, что итератор вернёт старое значение
+        Point p = it.next();
+        assertEquals(1.0, p.x, 1e-6);
+        assertEquals(10.0, p.y, 1e-6);  // должно остаться старое значение
+    }
+
+    @Test
     public void getXTest() {
         SynchronizedTabulatedFunction f = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(new double[] {1, 2, 3}, new double[] {1, 4, 9}));
         assertEquals(2, f.getX(1));
