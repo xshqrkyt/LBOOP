@@ -1,8 +1,8 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
+package ru.ssau.tk.samsa.lb6.operations;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.*;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions.InconsistentFunctionsException;
+import ru.ssau.tk.samsa.lb6.functions.*;
+import ru.ssau.tk.samsa.lb6.functions.factory.*;
+import ru.ssau.tk.samsa.lb6.exceptions.InconsistentFunctionsException;
 
 public class TabulatedFunctionOperationService {
     TabulatedFunctionFactory factory;
@@ -84,3 +84,4 @@ public class TabulatedFunctionOperationService {
         this.factory = factory;
     }
 }
+
