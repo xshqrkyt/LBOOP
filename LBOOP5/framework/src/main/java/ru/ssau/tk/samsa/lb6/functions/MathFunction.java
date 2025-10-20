@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 public interface MathFunction {
     double apply(double x);
@@ -7,3 +7,4 @@ public interface MathFunction {
         return new CompositeFunction(this, afterFunction);
     }
 }
+
