@@ -1,5 +1,6 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 public interface Insertable {
     void insert(double x, double y);
 }
+
