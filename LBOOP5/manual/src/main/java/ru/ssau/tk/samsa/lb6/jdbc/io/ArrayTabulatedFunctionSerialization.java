@@ -1,12 +1,12 @@
-package ru.ssau.tk.samsa.LB2.io;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.io;
 
 import java.io.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.ssau.tk.samsa.LB2.functions.*;
-import ru.ssau.tk.samsa.LB2.functions.factory.*;
-import ru.ssau.tk.samsa.LB2.operations.TabulatedDifferentialOperator;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.operations.TabulatedDifferentialOperator;
 
 public class ArrayTabulatedFunctionSerialization {
     private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileInputStream.class);
