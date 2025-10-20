@@ -10,7 +10,7 @@ import ru.ssau.tk.samsa.lb6.functions.factory.*;
 import java.io.*;
 
 public class TabulatedFunctionFileInputStream {
-    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileInputStream.class);
+    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileInputStream.class);
 
     public static void main(String[] args) {
         logger.info("Запущена программа чтения табулированных функций из файла.");

@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class TabulatedFunctionFileReader {
-    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileReader.class);
+    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileReader.class);
 
     public static void main(String[] str) {
         logger.info("Запущена программа чтения табулированных функций из файла.");

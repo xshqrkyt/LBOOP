@@ -9,7 +9,7 @@ import java.io.*;
 import java.lang.String;
 
 public class TabulatedFunctionFileWriter {
-    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileWriter.class);
+    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileWriter.class);
 
     public static void main(String[] str) {
         logger.info("Запущена программа записи табулированных функций из файла.");
