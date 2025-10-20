@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 public class SinFunction implements MathFunction {
     @Override
@@ -6,3 +6,4 @@ public class SinFunction implements MathFunction {
         return Math.sin(x);
     }
 }
+
