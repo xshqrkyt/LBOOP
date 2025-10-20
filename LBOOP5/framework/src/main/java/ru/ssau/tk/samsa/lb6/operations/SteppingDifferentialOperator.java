@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
+package ru.ssau.tk.samsa.lb6.operations;
 
 public abstract class SteppingDifferentialOperator<T> implements DifferentialOperator<T> {
     protected double step;
@@ -18,3 +18,4 @@ public abstract class SteppingDifferentialOperator<T> implements DifferentialOpe
         this.step = step;
     }
 }
+
