@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
 
 public class DeBoorFunction implements MathFunction {
     private final double[] knots;
@@ -119,4 +119,6 @@ public class DeBoorFunction implements MathFunction {
     public int getDegree() {
         return degree;
     }
+
 }
+

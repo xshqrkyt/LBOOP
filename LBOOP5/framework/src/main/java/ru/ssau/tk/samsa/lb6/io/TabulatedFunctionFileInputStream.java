@@ -1,15 +1,16 @@
-package ru.ssau.tk.samsa.LB2.io;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.io;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.ssau.tk.samsa.LB2.functions.*;
-import ru.ssau.tk.samsa.LB2.operations.TabulatedDifferentialOperator;
-import ru.ssau.tk.samsa.LB2.functions.factory.*;
+
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.operations.TabulatedDifferentialOperator;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.*;
 
 import java.io.*;
 
 public class TabulatedFunctionFileInputStream {
-    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileInputStream.class);
+    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileInputStream.class);
 
     public static void main(String[] args) {
         logger.info("Запущена программа чтения табулированных функций из файла.");

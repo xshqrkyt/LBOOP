@@ -1,15 +1,21 @@
-package ru.ssau.tk.samsa.LB2.operations;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
 
-import ru.ssau.tk.samsa.LB2.functions.Point;
-import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.functions.factory.*;
-import ru.ssau.tk.samsa.LB2.concurrent.SynchronizedTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent.SynchronizedTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.LinkedListTabulatedFunctionFactory;
 
-public class TabulatedDifferentialOperator implements DifferentialOperator<TabulatedFunction> {
+/**
+ * Класс для вычисления производной табулированной функции.
+ */
+public class TabulatedDifferentialOperator {
     private TabulatedFunctionFactory factory;
 
     public TabulatedDifferentialOperator() {
-        this.factory = new ArrayTabulatedFunctionFactory();
+        this.factory = new ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory();
     }
 
     public TabulatedDifferentialOperator(TabulatedFunctionFactory factory) {
@@ -24,37 +30,46 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         this.factory = factory;
     }
 
-    @Override
+    /**
+     * Вычисление производной табулированной функции.
+     * Для последней точки используется левая разность.
+     */
     public TabulatedFunction derive(TabulatedFunction function) {
-        return calculateDerivative(function);
-    }
+        int n = function.getCount();
+        double[] xValues = new double[n];
+        double[] yValues = new double[n];
 
-    @Override
-    public double apply(double x) {
-        throw new IllegalStateException("Нужно вызвать derive()");
-    }
+        for (int i = 0; i < n; i++) {
+            xValues[i] = function.getX(i);
+        }
 
-    private TabulatedFunction calculateDerivative(TabulatedFunction function) {
-        Point[] points = TabulatedFunctionOperationService.asPoints(function);
-        int count = points.length;
-        double[] xValues = new double[count];
-        double[] yValues = new double[count];
+        for (int i = 0; i < n - 1; i++) {
+            double x0 = function.getX(i);
+            double x1 = function.getX(i + 1);
+            double y0 = function.getY(i);
+            double y1 = function.getY(i + 1);
+            yValues[i] = (y1 - y0) / (x1 - x0);
+        }
 
-        for (int i = 0; i < count; i++)
-            xValues[i] = points[i].x;
-
-        for (int i = 0; i < count - 1; i++)
-            yValues[i] = (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
-
-        yValues[count - 1] = yValues[count - 2];
+        // Левая разность для последней точки
+        yValues[n - 1] = yValues[n - 2];
 
         return factory.create(xValues, yValues);
     }
 
-    public synchronized TabulatedFunction deriveSynchronously(TabulatedFunction function) {
-        if (!(function instanceof SynchronizedTabulatedFunction))
-            function = new SynchronizedTabulatedFunction(function);
+    /**
+     * Потокобезопасное вычисление производной.
+     * Если функция уже синхронизирована — не оборачиваем повторно.
+     */
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        SynchronizedTabulatedFunction syncFunction;
 
-        return ((SynchronizedTabulatedFunction)function).doSynchronously(f -> derive(f));
+        if (function instanceof SynchronizedTabulatedFunction) {
+            syncFunction = (SynchronizedTabulatedFunction) function;
+        } else {
+            syncFunction = new SynchronizedTabulatedFunction(function);
+        }
+
+        return syncFunction.doSynchronously(f -> derive(f));
     }
 }

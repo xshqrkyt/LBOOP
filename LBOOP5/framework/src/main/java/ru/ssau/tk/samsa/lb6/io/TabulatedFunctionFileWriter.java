@@ -1,15 +1,15 @@
-package ru.ssau.tk.samsa.LB2.io;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.io;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ru.ssau.tk.samsa.LB2.functions.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
 
 import java.io.*;
 import java.lang.String;
 
 public class TabulatedFunctionFileWriter {
-    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileWriter.class);
+    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileWriter.class);
 
     public static void main(String[] str) {
         logger.info("Запущена программа записи табулированных функций из файла.");

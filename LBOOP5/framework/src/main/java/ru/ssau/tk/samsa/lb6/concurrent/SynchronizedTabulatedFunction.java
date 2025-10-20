@@ -1,8 +1,8 @@
-package ru.ssau.tk.samsa.LB2.concurrent;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent;
 
-import ru.ssau.tk.samsa.LB2.functions.Point;
-import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.operations.TabulatedFunctionOperationService;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.Point;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.operations.TabulatedFunctionOperationService;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

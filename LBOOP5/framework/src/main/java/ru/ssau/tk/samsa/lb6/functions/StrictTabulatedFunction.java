@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
 
 import java.util.Iterator;
 
@@ -53,7 +53,9 @@ public class StrictTabulatedFunction implements TabulatedFunction {
     public double apply(double x) {
         int index = indexOfX(x);
         if (index == -1) {
-            throw new UnsupportedOperationException("Interpolation is not allowed for strict function. x = " + x + " not found in table.");
+            throw new UnsupportedOperationException(
+                    "Interpolation is not allowed for strict function. x = " + x + " not found in table."
+            );
         }
         return getY(index);
     }

@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
 
-import ru.ssau.tk.samsa.LB2.exceptions.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -30,7 +30,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (count < 2)
             throw new IllegalArgumentException("Count of points is less than 2");
-
+        
         this.count = count;
         xValues = new double[count];
         yValues = new double[count];
@@ -100,7 +100,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public double getX(int index) {
         if (index < 0 || index >= count)
             throw new IllegalArgumentException("Index " + index + " is out of bounds [0, " + (count-1) + "]");
-
+        
         return xValues[index];
     }
 
@@ -154,7 +154,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public void insert(double x, double y) {
         if (Double.isNaN(x) || Double.isNaN(y) || Double.isInfinite(x) || Double.isInfinite(y))
             throw new IllegalArgumentException("Incorrect value.");
-
+        
         int existingIndex = indexOfX(x);
         if (existingIndex != -1) {
             setY(existingIndex, y);
@@ -163,8 +163,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
         // Находим позицию для вставки
         int insertIndex = 0;
-        while (insertIndex < count && xValues[insertIndex] < x)
+        while (insertIndex < count && xValues[insertIndex] < x) {
             insertIndex++;
+        }
 
         // Создаем новые массивы с увеличенным размером
         double[] newXValues = new double[count + 1];
@@ -191,7 +192,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public void remove(int index) {
         if (count == 2)
             throw new IllegalArgumentException("Length of array is 2");
-
+        
         double[] newxValues = new double[count - 1];
         double[] newyValues = new double[count - 1];
 
@@ -214,7 +215,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         xValues = newxValues;
         yValues = newyValues;
         --count;
-
+        
         return;
     }
 

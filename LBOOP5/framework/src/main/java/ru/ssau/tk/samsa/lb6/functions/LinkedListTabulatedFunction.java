@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
 
-import ru.ssau.tk.samsa.LB2.exceptions.*;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions.*;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -38,20 +38,20 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     private Node getNode(int index) {
-        if (index < 0 || index >= count)
+        if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index out of bounds");
+        }
 
         Node current = head;
         if (index <= count / 2) {
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; i++) {
                 current = current.next;
-        }
-
-        else {
-            for (int i = count; i > index; i--)
+            }
+        } else {
+            for (int i = count; i > index; i--) {
                 current = current.prev;
+            }
         }
-
         return current;
     }
 
@@ -96,7 +96,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public void remove(int index) {
         if (count == 2)
             throw new IllegalArgumentException("Length of array is 2");
-
+        
         if (index < 0 || index >= count)
             throw new IllegalArgumentException("Index out of bounds");
 
@@ -124,7 +124,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public double getX(int index) {
         if (index < 0 || index >= count)
             throw new IllegalArgumentException("Incorrect index.");
-
+        
         return getNode(index).x;
     }
 
@@ -132,7 +132,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public double getY(int index) {
         if (index < 0 || index >= count)
             throw new IllegalArgumentException("Incorrect index.");
-
+        
         return getNode(index).y;
     }
 
@@ -140,7 +140,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public void setY(int index, double value) {
         if (index < 0 || index >= count)
             throw new IllegalArgumentException("Incorrect index.");
-
+        
         getNode(index).y = value;
     }
 
@@ -155,7 +155,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         return -1;
     }
-
+    
     @Override
     public Iterator<Point> iterator() {
         return new Iterator<Point>() {
@@ -179,7 +179,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
         };
     }
-
+    
     @Override
     public int indexOfY(double y) {
         Node current = head;
@@ -206,14 +206,14 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     protected int floorIndexOfX(double x) {
         if (x < head.x)
             throw new IllegalArgumentException("x = " + x + " is less than left bound " + head.x);
-        if (x > head.prev.x)
+        if (x > head.prev.x) 
             return count;
 
         Node current = head;
         for (int i = 0; i < count; i++) {
             if (current.x > x)
                 return i - 1;
-
+            
             current = current.next;
         }
         return count - 1;
@@ -261,7 +261,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private Node floorNodeOfX(double x) {
         if (x < head.x)
             throw new IllegalArgumentException("x = " + x + " is less than left bound " + head.x);
-        if (x > head.prev.x)
+        if (x > head.prev.x) 
             return head.prev.prev;
 
         Node current = head;
@@ -275,7 +275,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public void insert(double x, double y) {
         if (Double.isNaN(x) || Double.isNaN(y) || Double.isInfinite(x) || Double.isInfinite(y))
             throw new IllegalArgumentException("Incorrect value.");
-
+        
         if (head == null) {
             addNode(x, y);
             return;
