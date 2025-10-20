@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions;
+package ru.ssau.tk.samsa.lb6.exceptions;
 
 public class ArrayIsNotSortedException extends RuntimeException {
     public ArrayIsNotSortedException() {}
@@ -7,3 +7,4 @@ public class ArrayIsNotSortedException extends RuntimeException {
         super(message);
     }
 }
+
