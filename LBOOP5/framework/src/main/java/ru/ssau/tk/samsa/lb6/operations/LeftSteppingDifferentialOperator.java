@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
+package ru.ssau.tk.samsa.lb6.operations;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.MathFunction;
+import ru.ssau.tk.samsa.lb6.functions.MathFunction;
 
 public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperator<MathFunction> {
     public LeftSteppingDifferentialOperator(double step) {
@@ -22,3 +22,4 @@ public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperat
         throw new UnsupportedOperationException();
     }
 }
+
