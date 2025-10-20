@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.functions;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
 
 public class CompositeFunction implements MathFunction {
     private final MathFunction firstFunction;
