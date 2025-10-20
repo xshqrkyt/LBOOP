@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 import java.util.Iterator;
 
@@ -65,3 +65,4 @@ public class StrictTabulatedFunction implements TabulatedFunction {
         return function.iterator();
     }
 }
+
