@@ -1,10 +1,10 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.io;
+package ru.ssau.tk.samsa.lb6.io;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.*;
+import ru.ssau.tk.samsa.lb6.functions.*;
+import ru.ssau.tk.samsa.lb6.functions.factory.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,3 +36,4 @@ public class TabulatedFunctionFileReader {
         logger.info("Программа завершила свою работу.");
     }
 }
+
