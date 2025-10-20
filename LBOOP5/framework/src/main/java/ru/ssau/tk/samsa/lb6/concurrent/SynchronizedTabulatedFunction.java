@@ -1,8 +1,8 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent;
+package ru.ssau.tk.samsa.lb6.concurrent;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.Point;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.operations.TabulatedFunctionOperationService;
+import ru.ssau.tk.samsa.lb6.functions.Point;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.operations.TabulatedFunctionOperationService;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -93,3 +93,4 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
         }
     }
 }
+
