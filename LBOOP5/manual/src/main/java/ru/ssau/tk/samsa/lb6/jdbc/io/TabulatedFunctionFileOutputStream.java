@@ -8,7 +8,7 @@ import ru.ssau.tk.samsa.lb6.jdbc.functions.*;
 import java.io.*;
 
 public class TabulatedFunctionFileOutputStream {
-    private static final Logger logger = LogManager.getLogger(ru.ssau.tk.samsa.LB2.io.TabulatedFunctionFileOutputStream.class);
+    private static final Logger logger = LogManager.getLogger(TabulatedFunctionFileOutputStream.class);
 
     public static void main(String[] args) {
         logger.info("Запущена программа записи табулированных функций из файла.");
