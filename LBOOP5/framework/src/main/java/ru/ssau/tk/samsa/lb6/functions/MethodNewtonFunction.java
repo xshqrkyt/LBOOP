@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 public class MethodNewtonFunction implements MathFunction {
    private MathFunction f;
@@ -36,3 +36,4 @@ public class MethodNewtonFunction implements MathFunction {
        return (f.apply(x + h) - f.apply(x - h)) / (2 * h);
    }
 }
+
