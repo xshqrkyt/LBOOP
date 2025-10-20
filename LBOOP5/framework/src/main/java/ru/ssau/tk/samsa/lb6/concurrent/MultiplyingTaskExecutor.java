@@ -1,12 +1,12 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent;
+package ru.ssau.tk.samsa.lb6.concurrent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.UnitFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.io.TabulatedFunctionFileInputStream;
+import ru.ssau.tk.samsa.lb6.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.UnitFunction;
+import ru.ssau.tk.samsa.lb6.io.TabulatedFunctionFileInputStream;
 
 import java.util.ArrayList;
 import java.util.Set;
