@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 import static java.lang.Math.pow;
 
@@ -8,3 +8,4 @@ public class SqrFunction implements MathFunction {
         return pow(x, 2);
     }
 }
+
