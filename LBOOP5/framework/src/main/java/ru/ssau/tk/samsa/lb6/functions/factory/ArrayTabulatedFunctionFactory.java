@@ -1,7 +1,7 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory;
+package ru.ssau.tk.samsa.lb6.functions.factory;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
 
 public class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory {
     @Override
@@ -9,3 +9,4 @@ public class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory {
         return new ArrayTabulatedFunction(xValues, yValues);
     }
 }
+
