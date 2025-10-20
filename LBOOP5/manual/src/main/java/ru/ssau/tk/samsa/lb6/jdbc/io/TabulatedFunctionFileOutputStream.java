@@ -1,9 +1,9 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.io;
+package ru.ssau.tk.samsa.lb6.jdbc.io;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
+import ru.ssau.tk.samsa.lb6.jdbc.functions.*;
 
 import java.io.*;
 

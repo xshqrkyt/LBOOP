@@ -1,7 +1,7 @@
-package ru.ssau.tk.samsa.LB2.io;
+package ru.ssau.tk.samsa.lb6.jdbc.io;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.*;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.*;
+import ru.ssau.tk.samsa.lb6.jdbc.functions.*;
+import ru.ssau.tk.samsa.lb6.jdbc.functions.factory.*;
 
 import java.io.*;
 import java.text.NumberFormat;
