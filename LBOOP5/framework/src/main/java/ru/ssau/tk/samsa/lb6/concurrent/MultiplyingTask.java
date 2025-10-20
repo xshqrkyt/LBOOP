@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent;
+package ru.ssau.tk.samsa.lb6.concurrent;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
 
 public class MultiplyingTask implements Runnable {
     private TabulatedFunction function;
@@ -25,3 +25,4 @@ public class MultiplyingTask implements Runnable {
         return end;
     }
 }
+
