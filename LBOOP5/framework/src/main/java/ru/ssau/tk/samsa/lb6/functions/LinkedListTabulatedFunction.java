@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions.*;
+import ru.ssau.tk.samsa.lb6.exceptions.*;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -330,3 +330,4 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         ++count;
     }
 }
+
