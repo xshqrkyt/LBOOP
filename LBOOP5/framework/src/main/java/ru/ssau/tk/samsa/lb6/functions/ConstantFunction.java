@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 public class ConstantFunction implements MathFunction {
     private final double CONST_NUM;
@@ -16,3 +16,4 @@ public class ConstantFunction implements MathFunction {
         return CONST_NUM;
     }
 }
+
