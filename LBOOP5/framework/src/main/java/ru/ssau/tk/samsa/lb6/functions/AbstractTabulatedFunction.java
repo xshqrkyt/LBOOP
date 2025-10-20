@@ -1,6 +1,6 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.exceptions.*;
+import ru.ssau.tk.samsa.lb6.exceptions.*;
 
 public abstract class AbstractTabulatedFunction implements MathFunction, TabulatedFunction {
     protected abstract int floorIndexOfX(double x);
@@ -60,3 +60,4 @@ public abstract class AbstractTabulatedFunction implements MathFunction, Tabulat
         }
     }
 }
+
