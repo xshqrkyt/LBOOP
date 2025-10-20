@@ -1,7 +1,7 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory;
+package ru.ssau.tk.samsa.lb6.functions.factory;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
 
 public class LinkedListTabulatedFunctionFactory implements TabulatedFunctionFactory {
     @Override
@@ -9,3 +9,4 @@ public class LinkedListTabulatedFunctionFactory implements TabulatedFunctionFact
         return new LinkedListTabulatedFunction(xValues, yValues);
     }
 }
+
