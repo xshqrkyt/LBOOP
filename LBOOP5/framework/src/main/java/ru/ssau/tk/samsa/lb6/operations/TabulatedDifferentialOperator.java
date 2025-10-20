@@ -1,12 +1,12 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
+package ru.ssau.tk.samsa.lb6.operations;
 
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent.SynchronizedTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.TabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.lb6.concurrent.SynchronizedTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.samsa.lb6.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.lb6.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.lb6.functions.factory.LinkedListTabulatedFunctionFactory;
 
 /**
  * Класс для вычисления производной табулированной функции.
@@ -73,3 +73,4 @@ public class TabulatedDifferentialOperator {
         return syncFunction.doSynchronously(f -> derive(f));
     }
 }
+
