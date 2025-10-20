@@ -1,4 +1,4 @@
-package ru.ssau.tk.samsa.LB2.lb6.jdbc.functions;
+package ru.ssau.tk.samsa.lb6.functions;
 
 import java.lang.Iterable;
 
@@ -12,3 +12,4 @@ public interface TabulatedFunction extends MathFunction, Iterable<Point> {
     double leftBound();
     double rightBound();
 }
+
