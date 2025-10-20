@@ -2,11 +2,8 @@ package ru.ssau.tk.samsa.lb6.operations;
 
 import ru.ssau.tk.samsa.lb6.concurrent.SynchronizedTabulatedFunction;
 import ru.ssau.tk.samsa.lb6.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.lb6.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.samsa.lb6.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.samsa.lb6.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.samsa.lb6.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.lb6.functions.factory.LinkedListTabulatedFunctionFactory;
 
 /**
  * Класс для вычисления производной табулированной функции.
@@ -15,7 +12,7 @@ public class TabulatedDifferentialOperator {
     private TabulatedFunctionFactory factory;
 
     public TabulatedDifferentialOperator() {
-        this.factory = new ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory();
+        this.factory = new ArrayTabulatedFunctionFactory();
     }
 
     public TabulatedDifferentialOperator(TabulatedFunctionFactory factory) {
@@ -73,4 +70,5 @@ public class TabulatedDifferentialOperator {
         return syncFunction.doSynchronously(f -> derive(f));
     }
 }
+
 
