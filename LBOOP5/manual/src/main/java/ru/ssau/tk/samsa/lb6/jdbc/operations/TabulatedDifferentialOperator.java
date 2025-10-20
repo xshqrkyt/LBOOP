@@ -1,12 +1,12 @@
-package ru.ssau.tk.samsa.LB2.operations;
+package ru.ssau.tk.samsa.LB2.lb6.jdbc.operations;
 
-import ru.ssau.tk.samsa.LB2.concurrent.SynchronizedTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.functions.TabulatedFunction;
-import ru.ssau.tk.samsa.LB2.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.samsa.LB2.functions.factory.TabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.samsa.LB2.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.concurrent.SynchronizedTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.TabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.samsa.LB2.lb6.jdbc.functions.factory.LinkedListTabulatedFunctionFactory;
 
 /**
  * Класс для вычисления производной табулированной функции.
