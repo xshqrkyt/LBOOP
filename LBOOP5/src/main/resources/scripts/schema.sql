@@ -1,0 +1,39 @@
+CREATE TYPE user_role AS ENUM ('ADMIN', 'USER');
+
+CREATE TABLE "user" (
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    role user_role NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE function (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    owner_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE
+);
+
+CREATE TABLE point (
+    id BIGSERIAL PRIMARY KEY,
+    x_value DOUBLE PRECISION NOT NULL,
+    y_value DOUBLE PRECISION NOT NULL,
+    function_id BIGINT NOT NULL REFERENCES function(id) ON DELETE CASCADE
+);
+
+CREATE TABLE composite_function (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    owner_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE
+);
+
+CREATE TABLE composite_function_link (
+    id BIGSERIAL PRIMARY KEY,
+    composite_id BIGINT NOT NULL REFERENCES composite_function(id) ON DELETE CASCADE,
+    function_id BIGINT NOT NULL REFERENCES function(id) ON DELETE CASCADE,
+    order_index INT NOT NULL
+);
