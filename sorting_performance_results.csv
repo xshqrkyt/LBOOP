@@ -1,0 +1,11 @@
+branch,query,execution time (ms),execution date
+manual,findUsernameSorted(UserDAO ASC),312,2025-10-26 16:10:43.875623
+manual,findUsernameSorted(UserDAO DESC),115,2025-10-26 16:10:43.991927
+manual,findCriteriaSorted(FunctionDAO ASC),207,2025-10-26 16:10:44.200473
+manual,findCriteriaSorted(FunctionDAO DESC),108,2025-10-26 16:10:44.308757
+manual,findFunctionIdSorted(PointsDAO ASC),61,2025-10-26 16:10:44.37092
+manual,findFunctionIdSorted(PointsDAO DESC),51,2025-10-26 16:10:44.423057
+manual,findAllSorted(CompositeFunctionDAO ASC),3192,2025-10-26 16:10:47.615257
+manual,findAllSorted(CompositeFunctionDAO ASC),3098,2025-10-26 16:10:50.714629
+manual,findAllSorted(CompositeFunctionLinkDAO ASC),11,2025-10-26 16:10:50.727664
+manual,findAllSorted(CompositeFunctionLinkDAO DESC),13,2025-10-26 16:10:50.741701

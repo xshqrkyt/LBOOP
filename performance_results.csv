@@ -1,0 +1,24 @@
+branch,query,execution time (ms),execution date
+manual,create(UserDAO),786,2025-10-26 15:17:15.085288
+manual,create(FunctionDAO),236,2025-10-26 15:17:15.331962
+manual,create(PointsDAO),252,2025-10-26 15:17:15.585626
+manual,create(CompositeFunctionDAO),169,2025-10-26 15:17:15.756072
+manual,create(CompositeFunctionLinkDAO),191,2025-10-26 15:17:15.948548
+manual,findId(UserDAO),232,2025-10-26 15:17:16.181053
+manual,findUsername(UserDAO),163,2025-10-26 15:17:16.34528
+manual,findId(FunctionDAO),255,2025-10-26 15:17:16.60095
+manual,findName(FunctionDAO),6891,2025-10-26 15:17:23.493759
+manual,findOwnerId(FunctionDAO),115,2025-10-26 15:17:23.609064
+manual,findId(PointsDAO),50,2025-10-26 15:17:23.660196
+manual,findId(CompositeFunctionDAO),68,2025-10-26 15:17:23.728375
+manual,findId(CompositeFunctionLinkDAO),120,2025-10-26 15:17:23.849692
+manual,update(UserDAO),349,2025-10-26 15:17:24.198954
+manual,update(FunctionDAO),232,2025-10-26 15:17:24.432093
+manual,update(PointsDAO),212,2025-10-26 15:17:24.645238
+manual,update(CompositeFunctionDAO),153,2025-10-26 15:17:24.799672
+manual,update(CompositeFunctionLinkDAO),181,2025-10-26 15:17:24.981116
+manual,delete(UserDAO),1004,2025-10-26 15:17:25.986791
+manual,delete(FunctionDAO),32,2025-10-26 15:17:26.018875
+manual,delete(PointsDAO),32,2025-10-26 15:17:26.052967
+manual,delete(CompositeFunctionLinkDAO),21,2025-10-26 15:17:26.075022
+manual,delete(CompositeFunctionDAO),18,2025-10-26 15:17:26.094073

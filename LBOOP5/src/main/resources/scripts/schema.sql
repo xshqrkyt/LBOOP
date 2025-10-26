@@ -1,39 +1,46 @@
-CREATE TYPE user_role AS ENUM ('ADMIN', 'USER');
-
-CREATE TABLE "user" (
-    id BIGSERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     email VARCHAR(100),
-    role user_role NOT NULL,
+    role VARCHAR(20) NOT NULL CHECK (role IN ('ADMIN', 'USER')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE function (
+CREATE TABLE IF NOT EXISTS function (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    type VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL CHECK (type IN ('SQR', 'IDENTITY', 'COMPOSITE', 'CONSTANT', 'NEWTON_METHOD', 'DEBOOR', 'SIN')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    owner_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE
+    owner_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_owner FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE point (
+CREATE TABLE IF NOT EXISTS points (
     id BIGSERIAL PRIMARY KEY,
-    x_value DOUBLE PRECISION NOT NULL,
-    y_value DOUBLE PRECISION NOT NULL,
-    function_id BIGINT NOT NULL REFERENCES function(id) ON DELETE CASCADE
+    x_value DOUBLE ARRAY NOT NULL,
+    y_value DOUBLE ARRAY NOT NULL,
+    function_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_function FOREIGN KEY(function_id) REFERENCES function(id) ON DELETE CASCADE
 );
 
-CREATE TABLE composite_function (
+CREATE TABLE IF NOT EXISTS composite_function (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    owner_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE
+    owner_id BIGINT NOT NULL,
+
+    CONSTRAINT cfk_owner FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE composite_function_link (
+CREATE TABLE IF NOT EXISTS composite_function_link (
     id BIGSERIAL PRIMARY KEY,
-    composite_id BIGINT NOT NULL REFERENCES composite_function(id) ON DELETE CASCADE,
-    function_id BIGINT NOT NULL REFERENCES function(id) ON DELETE CASCADE,
-    order_index INT NOT NULL
+    composite_id BIGINT NOT NULL,
+    function_id BIGINT NOT NULL,
+    order_index INT NOT NULL,
+
+    CONSTRAINT cfk_composite FOREIGN KEY(composite_id) REFERENCES composite_function(id) ON DELETE CASCADE,
+    CONSTRAINT cfk_function FOREIGN KEY(function_id) REFERENCES function(id) ON DELETE CASCADE
 );
