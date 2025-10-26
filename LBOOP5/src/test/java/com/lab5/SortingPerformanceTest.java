@@ -88,16 +88,21 @@ public class SortingPerformanceTest {
                     id BIGSERIAL PRIMARY KEY,
                     name VARCHAR(100) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    owner_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+                    owner_id BIGINT NOT NULL,
+                    
+                    CONSTRAINT cfk_owner FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE
                 );
             """);
 
             st.execute("""
                 CREATE TABLE IF NOT EXISTS composite_function_link (
                     id BIGSERIAL PRIMARY KEY,
-                    composite_id BIGINT NOT NULL REFERENCES composite_function(id) ON DELETE CASCADE,
-                    function_id BIGINT NOT NULL REFERENCES function(id) ON DELETE CASCADE,
-                    order_index INT NOT NULL
+                    composite_id BIGINT NOT NULL,
+                    function_id BIGINT NOT NULL,
+                    order_index INT NOT NULL,
+                    
+                    CONSTRAINT cfk_composite FOREIGN KEY(composite_id) REFERENCES composite_function(id) ON DELETE CASCADE,
+                    CONSTRAINT cfk_function FOREIGN KEY(function_id) REFERENCES function(id) ON DELETE CASCADE
                 );
             """);
         }
