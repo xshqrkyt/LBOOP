@@ -1,5 +1,5 @@
 // src/test/java/com/lab5/framework/repository/FunctionRepositoryTest.java
-package com.lab5.framework.repository;
+package com.lab5.repository;
 
 import com.lab5.common.enums.UserRole;
 import com.lab5.entity.Function;

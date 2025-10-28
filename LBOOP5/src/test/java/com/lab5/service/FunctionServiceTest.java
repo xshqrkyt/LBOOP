@@ -1,5 +1,5 @@
 // src/test/java/com/lab5/framework/service/FunctionServiceTest.java
-package com.lab5.framework.service;
+package com.lab5.service;
 
 import com.lab5.common.dto.FunctionRequest;
 import com.lab5.common.dto.FunctionResponse;
