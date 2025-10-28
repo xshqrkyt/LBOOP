@@ -2,11 +2,15 @@
 package com.lab5.framework.repository;
 
 import com.lab5.common.enums.UserRole;
-import com.lab5.framework.entity.Function;
-import com.lab5.framework.entity.Point;
-import com.lab5.framework.entity.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.lab5.entity.Function;
+import com.lab5.entity.Point;
+import com.lab5.entity.User;
+import com.lab5.repository.FunctionRepository;
+import com.lab5.repository.UserRepository;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -14,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.UUID;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")
@@ -33,8 +36,10 @@ class FunctionRepositoryTest {
     @BeforeEach
     void setUp() {
         testUser = new User();
-        testUser.setUsername("framework_user");
+        // Уникальное имя пользователя для предотвращения конфликта
+        testUser.setUsername("framework_user_" + UUID.randomUUID().toString().substring(0, 8));
         testUser.setPasswordHash("password123");
+        // Email оставляем фиксированным, как попросили
         testUser.setEmail("framework@example.com");
         testUser.setRole(UserRole.USER);
         testUser = userRepository.save(testUser);
@@ -47,7 +52,6 @@ class FunctionRepositoryTest {
         function.setType("TABULATED");
         function.setOwner(testUser);
 
-        // Add points
         Point point1 = new Point();
         point1.setXValue(1.0);
         point1.setYValue(1.0);
@@ -68,6 +72,7 @@ class FunctionRepositoryTest {
         assertEquals(testUser.getId(), saved.getOwner().getId());
     }
 
+
     @Test
     void testFindByOwnerId() {
         // Create multiple functions
@@ -84,9 +89,11 @@ class FunctionRepositoryTest {
 
     @Test
     void testFindByNameContainingIgnoreCase() {
-        createFunction("Linear Function", "TABULATED");
-        createFunction("Quadratic Function", "SQR");
-        createFunction("Other", "IDENTITY");
+        Function f1 = createFunction("Linear Function", "TABULATED");
+        Function f2 = createFunction("Quadratic Function", "SQR");
+        Function f3 = createFunction("Other", "IDENTITY");
+        functionRepository.saveAll(List.of(f1, f2, f3));
+        functionRepository.flush();
 
         List<Function> functionResults = functionRepository.findByNameContainingIgnoreCase("function");
         assertEquals(2, functionResults.size());
@@ -98,12 +105,13 @@ class FunctionRepositoryTest {
 
     @Test
     void testFindByOwnerIdAndNameContainingIgnoreCase() {
-        createFunction("Test Function A", "TABULATED");
-        createFunction("Test Function B", "SQR");
-        createFunction("Different", "IDENTITY");
+        Function f1 = createFunction("Test Function A", "TABULATED");
+        Function f2 = createFunction("Test Function B", "SQR");
+        Function f3 = createFunction("Different", "IDENTITY");
+        functionRepository.saveAll(List.of(f1, f2, f3));
+        functionRepository.flush();
 
-        List<Function> results = functionRepository.findByOwnerIdAndNameContainingIgnoreCase(
-                testUser.getId(), "test function");
+        List<Function> results = functionRepository.findByOwnerIdAndNameContainingIgnoreCase(testUser.getId(), "test function");
         assertEquals(2, results.size());
     }
 
@@ -140,7 +148,9 @@ class FunctionRepositoryTest {
         functionRepository.save(function1);
 
         // Add small delay to ensure different timestamps
-        try { Thread.sleep(10); } catch (InterruptedException e) {}
+        try {
+            Thread.sleep(10); }
+        catch (InterruptedException e) {}
 
         Function function2 = createFunction("New Function", "SQR");
         functionRepository.save(function2);
