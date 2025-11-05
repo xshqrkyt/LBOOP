@@ -1,0 +1,82 @@
+2025-11-05 02:02:41 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL и создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Таблицы созданы, пользователи вставлены: 1, 2
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Тестируем создание, поиск, обновление и удаление CompositeFunction.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Очищаем таблицы после каждого теста.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Закрываем соединение.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL и создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Таблицы созданы, пользователи вставлены: 3, 4
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Очищаем таблицы после каждого теста.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Закрываем соединение.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL и создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Таблицы созданы, пользователи вставлены: 5, 6
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Очищаем таблицы после каждого теста.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Закрываем соединение.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL и создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Таблицы созданы, пользователи вставлены: 7, 8
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Очищаем таблицы после каждого теста.
+2025-11-05 02:02:42 [main] INFO  c.lab6.dao.CompositeFunctionDAOTest - Закрываем соединение.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём функцию для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём функцию для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Тестируются создание в БД точек, поиск их по id, имени, изменение данных у них и удаление их из БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём функцию для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Создаём функцию для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.PointsDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Создаём пользователей для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Тестируются создание в БД функций, поиск их по id, имени, изменение данных у них и удаление их из БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Создаём таблицы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Таблицы созданы.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Создаём пользователей для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.FunctionDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Тестируются создание в БД пользователя, поиск его по id и имени, изменение данных у него и удаление его из БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Подключаемся к H2 с эмуляцией PostgreSQL.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Создаём пользователя для БД.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Пользователь создан.
+2025-11-05 02:02:42 [main] INFO  com.lab6.dao.UserDAOTest - Закрываем соединение после каждого теста.
+2025-11-05 02:02:49 [main] INFO  com.lab6.MapperTest - Запускаются тесты.
+2025-11-05 02:02:49 [main] INFO  com.lab6.MapperTest - Тесты завершились.

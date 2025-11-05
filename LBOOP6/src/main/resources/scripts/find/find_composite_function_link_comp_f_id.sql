@@ -1,0 +1,1 @@
+SELECT * FROM composite_function_link WHERE composite_id = ?;

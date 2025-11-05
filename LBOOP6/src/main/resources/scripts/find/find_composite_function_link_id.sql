@@ -1,0 +1,1 @@
+SELECT composite_function_link.*, functions.name AS function_name, composite_function.name AS composite_name FROM composite_function_link JOIN functions ON composite_function_link.function_id = functions.id JOIN composite_function ON composite_function_link.composite_id = composite_function.id WHERE composite_function_link.id = ?;

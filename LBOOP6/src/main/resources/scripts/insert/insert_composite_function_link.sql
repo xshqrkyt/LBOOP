@@ -1,0 +1,1 @@
+INSERT INTO composite_function_link (composite_id, function_id, order_index) VALUES (?, ?, ?);

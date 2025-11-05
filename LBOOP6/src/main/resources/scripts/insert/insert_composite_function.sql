@@ -1,0 +1,1 @@
+INSERT INTO composite_function (name, owner_id) VALUES (?, ?);
