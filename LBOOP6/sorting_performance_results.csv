@@ -1,10 +1,9 @@
-repository,query,duration (ms)
-UserRepository,findAllSortedByUsernameAsc,161
-UserRepository,findAllSortedByEmailDesc,137
-FunctionRepository,findByOwnerIdOrderByCreatedAtDesc,138
-FunctionRepository,findByOwnerIdOrderByNameAsc,204
-FunctionRepository,findByNameAndTypeAndOwnerIdSortedByNameAsc,130
-PointRepository,findByFunctionIdSortedByXAsc,143
-CompositeFunctionRepository,findByNameInWithSort,153
-CompositeFunctionLinkRepository,findAllByOrderByIdSortedByIdAsc,127
-CompositeFunctionLinkRepository,findAllByOrderByIdSortedByIdDesc,134
+query,manual execution time (ms),framework execution time (ms)
+findUsernameSorted(UserDAO ASC),277,161
+findUsernameSorted(UserDAO DESC),150,137
+findCriteriaSorted(FunctionDAO ASC),248,204
+findCriteriaSorted(FunctionDAO DESC),114,130
+findFunctionIdSorted(PointsDAO ASC),70,143
+findAllSorted(CompositeFunctionDAO ASC),3336,153
+findAllSorted(CompositeFunctionLinkDAO ASC),13,127
+findAllSorted(CompositeFunctionLinkDAO DESC),8,134
