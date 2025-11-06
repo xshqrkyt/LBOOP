@@ -1,11 +1,9 @@
-branch,query,execution time (ms)
-manual,findUsernameSorted(UserDAO ASC),277
-manual,findUsernameSorted(UserDAO DESC),150
-manual,findCriteriaSorted(FunctionDAO ASC),248
-manual,findCriteriaSorted(FunctionDAO DESC),114
-manual,findFunctionIdSorted(PointsDAO ASC),70
-manual,findFunctionIdSorted(PointsDAO DESC),56
-manual,findAllSorted(CompositeFunctionDAO ASC),3336
-manual,findAllSorted(CompositeFunctionDAO ASC),3243
-manual,findAllSorted(CompositeFunctionLinkDAO ASC),13
-manual,findAllSorted(CompositeFunctionLinkDAO DESC),8
+query,manual execution time (ms),framework execution time (ms)
+findUsernameSorted(UserDAO ASC),277,161
+findUsernameSorted(UserDAO DESC),150,137
+findCriteriaSorted(FunctionDAO ASC),248,204
+findCriteriaSorted(FunctionDAO DESC),114,130
+findFunctionIdSorted(PointsDAO ASC),70,143
+findAllSorted(CompositeFunctionDAO ASC),3336,153
+findAllSorted(CompositeFunctionLinkDAO ASC),13,127
+findAllSorted(CompositeFunctionLinkDAO DESC),8,134
