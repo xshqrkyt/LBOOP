@@ -1,0 +1,96 @@
+Унифицированный контракт API
+
+Базовый URL
+/lab6-1.0-SNAPSHOT/{название_БД}
+(/lab6-1.0-SNAPSHOT/spring, /lab6-1.0-SNAPSHOT/postgres)
+
+Ресурсы и эндпоинты:
+1. Пользователи (Users)
+GET /lab6-1.0-SNAPSHOT/{название_БД}/users?id={id}
+Получение пользователя по ID
+Ответ: JSON с данными пользователя
+
+GET /lab6-1.0-SNAPSHOT/{название_БД}/users?username={username}
+Получение пользователя по имени пользователя
+
+POST /lab6-1.0-SNAPSHOT/{название_БД}/users
+Создание нового пользователя
+Тело запроса: JSON с данными нового пользователя (UserRequest)
+
+PUT /lab6-1.0-SNAPSHOT/{название_БД}/users?id={id}
+Обновление пользователя с указанным ID
+Тело запроса: JSON с обновлёнными данными
+
+DELETE /lab6-1.0-SNAPSHOT/{название_БД}/users?id={id}
+Удаление пользователя по ID
+
+2. Точки (Points)
+GET /lab6-1.0-SNAPSHOT/{название_БД}/points?id={id}
+Получение точки по ID
+
+GET /lab6-1.0-SNAPSHOT/{название_БД}/points?functionId={functionId}
+Получение точек по ID функции
+
+POST /lab6-1.0-SNAPSHOT/{название_БД}/points
+Создание новой точки
+
+PUT /lab6-1.0-SNAPSHOT/{название_БД}/points?id={id}
+Обновление точки
+
+DELETE /lab6-1.0-SNAPSHOT/{название_БД}/points?id={id}
+Удаление точки
+
+3. Функции (Functions)
+GET /lab6-1.0-SNAPSHOT/{название_БД}/functions?id={id}
+Получение функции по ID
+
+GET /lab6-1.0-SNAPSHOT/{название_БД}/functions?name={name}&type={type}&ownerId={ownerId}
+Поиск функций по параметрам
+
+POST /lab6-1.0-SNAPSHOT/{название_БД}/functions
+Создание функции
+
+PUT /lab6-1.0-SNAPSHOT/{название_БД}/functions?id={id}
+Обновление функции
+
+DELETE /lab6-1.0-SNAPSHOT/{название_БД}/functions?id={id}
+Удаление функции
+
+4. Сложные функции (Composite Functions)
+GET /lab6-1.0-SNAPSHOT/{название_БД}/composite-functions?id={id}
+Получение композитной функции
+
+GET /lab6-1.0-SNAPSHOT/{название_БД}/composite-functions?name={name}&names={names}&ownerId={ownerId}
+Поиск по имени/списку имён
+
+POST /lab6-1.0-SNAPSHOT/{название_БД}/composite-functions
+Создание
+
+PUT /lab6-1.0-SNAPSHOT/{название_БД}/composite-functions?id={id}
+Обновление
+
+DELETE /lab6-1.0-SNAPSHOT/{название_БД}/composite-functions?id={id}
+Удаление
+
+5. Ссылки сложных функций (Composite Function Links)
+GET /lab6-1.0-SNAPSHOT/{название_БД}/composite-function-links?id={id}
+Получение ссылки по ID
+
+GET /lab6-1.0-SNAPSHOT/{название_БД}/composite-function-links?compositeId={compositeId}&functionId={functionId}&ids={ids}
+Фильтрация по параметрам
+
+POST /lab6-1.0-SNAPSHOT/{название_БД}/composite-function-links
+Создание
+
+PUT /lab6-1.0-SNAPSHOT/{название_БД}/composite-function-links?id={id}
+Обновление
+
+DELETE /lab6-1.0-SNAPSHOT/{название_БД}/composite-function-links?id={id}
+Удаление
+
+Авторизация и безопасность
+Все запросы требуют Basic Auth
+
+Роль USER может выполнять только GET-запросы
+
+Роль ADMIN имеет полный доступ ко всем методам
