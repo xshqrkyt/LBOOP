@@ -1,0 +1,1792 @@
+{
+	"info": {
+		"_postman_id": "28eaede9-43f6-40c2-bb76-514ea90c83dd",
+		"name": "SpringTestAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49758171",
+		"_collection_link": "https://me-di-a-3437652.postman.co/workspace/Diana-Melnikova's-Workspace~8e65cc47-b907-4b4e-8f79-7ae5d8222433/collection/49758171-28eaede9-43f6-40c2-bb76-514ea90c83dd?action=share&source=collection_link&creator=49758171"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем случайный суффикс для уникальности\r",
+							"const random = Math.floor(Math.random() * 10000);\r",
+							"\r",
+							"// Устанавливаем переменные окружения для подстановки в тело запроса\r",
+							"pm.environment.set(\"username\", `user${random}`);\r",
+							"pm.environment.set(\"passwordHash\", \"hashedPassword!@#2025\");\r",
+							"pm.environment.set(\"email\", `user${random}@example.com`);\r",
+							"pm.environment.set(\"role\", \"USER\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус ответа 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит поле id\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.environment.set(\"createdUserId\", jsonData.id);\r",
+							"    pm.environment.set(\"createdUsername\", jsonData.username);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка структуры ответа\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.all.keys(\"id\", \"username\", \"email\", \"role\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Role корректна\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect([\"USER\", \"ADMIN\"]).to.include(jsonData.role);\r",
+							"});\r",
+							"\r",
+							"if (pm.response.code !== 201) {\r",
+							"    console.warn(`Пользователь не создан. Код ответа: ${pm.response.code}`);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"passwordHash\": \"{{passwordHash}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"role\": \"{{role}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Function",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let fnName = \"Func_\" + Math.floor(Math.random() * 10000);\r",
+							"let types = [\"SQR\", \"DEBOOR\", \"IDENTITY\"];\r",
+							"let fnType = types[Math.floor(Math.random() * types.length)];\r",
+							"\r",
+							"pm.environment.set(\"functionName\", fnName);\r",
+							"pm.environment.set(\"functionType\", fnType);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"// Проверка, что id существует и число\r",
+							"pm.test(\"Response has valid id\", () => {\r",
+							"    pm.expect(res.id).to.be.a('number').and.to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"// Сохраняем id и имя созданной функции\r",
+							"pm.environment.set(\"functionId\", res.id);\r",
+							"pm.environment.set(\"functionName\", res.name);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{functionName}}\",\r\n  \"type\": \"{{functionType}}\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/functions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"functions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Point",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем случайные координаты для точки\r",
+							"const x = (Math.random() * 100).toFixed(2);\r",
+							"const y = (Math.random() * 100).toFixed(2);\r",
+							"\r",
+							"pm.environment.set(\"pointX\", parseFloat(x));\r",
+							"pm.environment.set(\"pointY\", parseFloat(y));\r",
+							"\r",
+							"// Убедимся, что functionId есть в окружении\r",
+							"if (!pm.environment.get(\"functionId\")) {\r",
+							"    throw new Error(\"functionId должен быть задан в переменных окружения\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\").and.to.be.above(0);\r",
+							"    // Сохраняем id новой точки для последующих тестов\r",
+							"    pm.environment.set(\"pointId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка координат в ответе\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.x).to.eql(pm.environment.get(\"pointX\"));\r",
+							"    pm.expect(jsonData.y).to.eql(pm.environment.get(\"pointY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка связанной функции\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"functionId\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"x\": {{pointX}},\r\n    \"y\": {{pointY}},\r\n    \"functionId\": {{functionId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/points",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CompF",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем уникальное имя composite функции\r",
+							"const timestamp = new Date().getTime();\r",
+							"const compositeName = \"CompositeFunc_\" + timestamp;\r",
+							"\r",
+							"pm.environment.set(\"compositeName\", compositeName);\r",
+							"\r",
+							"// Проверяем, что ownerId установлен\r",
+							"if (!pm.environment.get(\"ownerId\")) {\r",
+							"    throw new Error(\"Переменная ownerId должна быть задана\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе есть id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\").and.to.be.above(0);\r",
+							"    pm.environment.set(\"compositeFunctionId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Имя в ответе совпадает с отправленным\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"compositeName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"OwnerId в ответе совпадает с отправленным\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ownerId).to.eql(pm.environment.get(\"createdUserId\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{compositeName}}\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-functions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-functions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CompFLink",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе есть id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\").and.to.be.above(0);\r",
+							"    pm.environment.set(\"compositeFunctionLinkId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка compositeId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.compositeId).to.eql(pm.environment.get(\"compositeFunctionId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка functionId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"functionId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка orderIndex\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.orderIndex).to.eql(parseInt(pm.environment.get(\"orderIndex\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"compositeId\": {{compositeFunctionId}},\r\n  \"functionId\": {{functionId}},\r\n  \"orderIndex\": {{orderIndex}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id пользователя\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"createdUserId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит username\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"username\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/users?id={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id пользователя\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"createdUserId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит username\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"username\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/users?username={{createdUsername}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{createdUsername}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const random = Math.floor(Math.random() * 10000);\r",
+							"pm.environment.set(\"updatedUsername\", `updatedUser${random}`);\r",
+							"pm.environment.set(\"updatedEmail\", `updateduser${random}@example.com`);\r",
+							"pm.environment.set(\"updatedPasswordHash\", \"newHashedPass123\");\r",
+							"pm.environment.set(\"updatedRole\", \"ADMIN\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка обновленного username\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.username).to.eql(pm.environment.get(\"updatedUsername\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка роли\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.role).to.eql(pm.environment.get(\"updatedRole\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{updatedUsername}}\",\r\n  \"passwordHash\": \"{{updatedPasswordHash}}\",\r\n  \"email\": \"{{updatedEmail}}\",\r\n  \"role\": \"{{updatedRole}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/users/{{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"users",
+						"{{createdUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Function by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка наличия id в ответе\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"functionId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка наличия полей и типов\", () => {\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"pm.expect(jsonData).to.have.property(\"name\").that.is.a(\"string\");\r",
+							"pm.expect(jsonData).to.have.property(\"type\").that.is.a(\"string\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/functions?id={{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{functionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Function by OwnerId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив функций\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Каждый элемент содержит поля и createdUserId правильный\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const createdUserId = parseInt(pm.environment.get(\"createdUserId\"));\r",
+							"\r",
+							"    jsonData.forEach(function(item) {\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"name\").that.is.a(\"string\");\r",
+							"        pm.expect(item).to.have.property(\"type\").that.is.a(\"string\");\r",
+							"\r",
+							"        // Сравниваем поле createdUserId внутри каждого элемента с переменной окружения\r",
+							"        pm.expect(item.ownerId).to.eql(createdUserId);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/functions?ownerId={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "ownerId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Function",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем новые имя и тип функции для обновления\r",
+							"const randomSuffix = Math.floor(Math.random() * 10000);\r",
+							"pm.environment.set(\"functionName\", \"UpdatedFunction_\" + randomSuffix);\r",
+							"\r",
+							"const types = [\"SQR\", \"DEBOOR\", \"IDENTITY\"];\r",
+							"pm.environment.set(\"functionType\", types[Math.floor(Math.random() * types.length)]);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"// Проверяем, что id не изменился, а имя и тип обновлены\r",
+							"pm.test(\"Проверка id функции\", () => {\r",
+							"  pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"functionId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка обновленного имени функции\", () => {\r",
+							"  pm.expect(jsonData.name).to.eql(pm.environment.get(\"functionName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка обновленного типа функции\", () => {\r",
+							"  pm.expect(jsonData.type).to.eql(pm.environment.get(\"functionType\"));\r",
+							"});\r",
+							"\r",
+							"// Обновляем значения в окружении при необходимости\r",
+							"pm.environment.set(\"functionName\", jsonData.name);\r",
+							"pm.environment.set(\"functionType\", jsonData.type);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{functionName}}\",\r\n  \"type\": \"{{functionType}}\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/functions/{{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"functions",
+						"{{functionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Point by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка наличия id и его совпадения с переменной\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedId = parseInt(pm.environment.get(\"pointId\")); \r",
+							"    pm.expect(jsonData.id).to.eql(expectedId);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка основных полей ответа\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"x\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"y\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\").that.is.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/points?id={{pointId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"points"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{pointId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Point by FunctionId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив точек\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка основных полей каждого элемента массива\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedFunctionId = parseInt(pm.environment.get(\"functionId\")); \r",
+							"\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"x\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"y\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"functionId\").that.equals(expectedFunctionId);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/points?functionId={{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"points"
+					],
+					"query": [
+						{
+							"key": "functionId",
+							"value": "{{functionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Point",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерация новых значений для координат\r",
+							"const newX = (Math.random() * 100).toFixed(2);\r",
+							"const newY = (Math.random() * 100).toFixed(2);\r",
+							"\r",
+							"pm.environment.set(\"newX\", parseFloat(newX));\r",
+							"pm.environment.set(\"newY\", parseFloat(newY));\r",
+							"\r",
+							"// Проверка наличия pointId и functionId в окружении\r",
+							"if (!pm.environment.get(\"pointId\")) {\r",
+							"    throw new Error(\"Переменная pointId не задана\");\r",
+							"}\r",
+							"if (!pm.environment.get(\"functionId\")) {\r",
+							"    throw new Error(\"Переменная functionId не задана\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе присутствует id точка\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"pointId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка обновлённых координат\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.x).to.eql(pm.environment.get(\"newX\"));\r",
+							"    pm.expect(jsonData.y).to.eql(pm.environment.get(\"newY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка связанной функции\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"functionId\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"x\": {{newX}},\r\n  \"y\": {{newY}},\r\n  \"functionId\": {{functionId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/points/{{pointId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"points",
+						"{{pointId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompF by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id равный запрошенному\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedId = parseInt(pm.environment.get(\"compositeFunctionId\"));\r",
+							"    pm.expect(jsonData.id).to.eql(expectedId);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка основных полей ответа\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.is.a(\"string\");\r",
+							"    pm.expect(jsonData).to.have.property(\"ownerId\").that.is.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-functions?id={{compositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{compositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompF by OwnerId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив объектов\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Каждый элемент массива содержит правильный ownerId и основные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedOwnerId = parseInt(pm.environment.get(\"createdUserId\"));\r",
+							"\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"ownerId\").that.equals(expectedOwnerId);\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"name\").that.is.a(\"string\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-functions?ownerId={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-functions"
+					],
+					"query": [
+						{
+							"key": "ownerId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CompF",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем новое имя для обновления\r",
+							"const timestamp = new Date().getTime();\r",
+							"const updatedName = \"Updated_Composite_\" + timestamp;\r",
+							"\r",
+							"pm.environment.set(\"updatedCompositeName\", updatedName);\r",
+							"\r",
+							"if (!pm.environment.get(\"compositeFunctionId\")) {\r",
+							"    throw new Error(\"Переменная compositeFunctionId не задана\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе присутствует id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"compositeFunctionId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Имя обновлено корректно\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"updatedCompositeName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"OwnerId совпадает с отправленным\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ownerId).to.eql(pm.environment.get(\"createdUserId\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{updatedCompositeName}}\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-functions/{{compositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-functions",
+						"{{compositeFunctionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит объект с нужным id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedId = parseInt(pm.environment.get(\"compositeFunctionLinkId\"));\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.equals(expectedId);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка основных полей CompositeFunctionLinkResponse\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"compositeId\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links?id={{compositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{compositeFunctionLinkId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by CompFId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив с элементами\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Каждый элемент массива содержит нужный functionId и основные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedFunctionId = parseInt(pm.environment.get(\"functionId\"));\r",
+							"\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"functionId\").that.equals(expectedFunctionId);\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"compositeId\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links?compositeId={{compositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "compositeId",
+							"value": "{{compositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by FunctionId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив объектов\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Каждый объект содержит field functionId, равный переменной окружения\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedFunctionId = parseInt(pm.environment.get(\"functionId\"));\r",
+							"\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"functionId\").that.equals(expectedFunctionId);\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"        if (item.hasOwnProperty(\"compositeId\")) {\r",
+							"            pm.expect(item.compositeId).to.be.a(\"number\");\r",
+							"        }\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links?functionId={{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "functionId",
+							"value": "{{functionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CompFLinks",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерация нового orderIndex для обновления (например, +1 к предыдущему)\r",
+							"let currentOrderIndex = pm.environment.get(\"orderIndex\") || 1;\r",
+							"const newOrderIndex = Number(currentOrderIndex) + 1;\r",
+							"pm.environment.set(\"newOrderIndex\", newOrderIndex);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит ожидаемый id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"compositeFunctionLinkId\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка compositeId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.compositeId).to.eql(pm.environment.get(\"compositeFunctionId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка functionId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"functionId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка обновленного orderIndex\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.orderIndex).to.eql(parseInt(pm.environment.get(\"newOrderIndex\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"compositeId\": {{compositeFunctionId}},\r\n  \"functionId\": {{functionId}},\r\n  \"orderIndex\": {{newOrderIndex}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links/{{compositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links",
+						"{{compositeFunctionLinkId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CompFLink",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Тело ответа пустое\", () => {\r",
+							"    pm.expect(pm.response.text()).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-function-links/{{compositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-function-links",
+						"{{compositeFunctionLinkId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CompF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Тело ответа пустое\", () => {\r",
+							"    pm.expect(pm.response.text()).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/composite-functions/{{compositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"composite-functions",
+						"{{compositeFunctionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Тело ответа пустое\", () => {\r",
+							"    pm.expect(pm.response.text()).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/points/{{pointId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"points",
+						"{{pointId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Тело ответа пустое\", () => {\r",
+							"    pm.expect(pm.response.text()).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/functions/{{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"functions",
+						"{{functionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Пользователь успешно удалён\", () => {\r",
+							"    pm.expect(pm.response.text()).to.eql(\"\"); // тело ответа пустое\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/spring/users/{{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"users",
+						"{{createdUserId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
