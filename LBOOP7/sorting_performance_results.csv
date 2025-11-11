@@ -1,0 +1,9 @@
+repository,query,duration (ms)
+UserRepository,findAllSortedByUsernameAsc,130
+UserRepository,findAllSortedByEmailDesc,123
+FunctionRepository,findByOwnerIdOrderByCreatedAtDesc,101
+FunctionRepository,findByOwnerIdOrderByNameAsc,73
+FunctionRepository,findByNameAndTypeAndOwnerIdSortedByNameAsc,72
+CompositeFunctionRepository,findByNameInWithSort,76
+CompositeFunctionLinkRepository,findAllByOrderByIdSortedByIdAsc,116
+CompositeFunctionLinkRepository,findAllByOrderByIdSortedByIdDesc,77

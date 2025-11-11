@@ -1,0 +1,25 @@
+request,manual execution time (ms),framework execution time (ms)
+POST(User),127,985
+POST(Function),5,159
+POST(Points),5,162
+POST(CompF),4,148
+POST(CompFLink),5,152
+GET by Id(User),4,137
+GET by Username(User),5,139
+PUT(User),6,255
+DELETE(User),8,142
+GET by Id(Function),4,132
+GET by Type(Function),3,67
+PUT(Function),14,141
+DELETE(Function),8,148
+GET by Id(Points),3,133
+PUT(Points),6,139
+DELETE(Points),6,150
+GET by Id(CompF),4,133
+PUT(CompF),12,122
+DELETE(CompFLink),6,161
+GET by Id(CompFLink),4,122
+GET by FunctionId(CompFLink),4,125
+GET by CompFId(CompFLink),5,130
+PUT(CompFLink),12,140
+DELETE(CompFLink),5,106
