@@ -1,0 +1,1 @@
+UPDATE composite_function SET name = ? WHERE id = ?;

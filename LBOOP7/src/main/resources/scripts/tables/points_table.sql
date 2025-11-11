@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS points (
+    id BIGSERIAL PRIMARY KEY,
+    x_value DOUBLE ARRAY NOT NULL,
+    y_value DOUBLE ARRAY NOT NULL,
+    function_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_function FOREIGN KEY(function_id) REFERENCES functions(id) ON DELETE CASCADE
+);
