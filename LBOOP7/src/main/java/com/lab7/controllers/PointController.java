@@ -1,18 +1,13 @@
 package com.lab7.controllers;
 
-import com.lab7.dto.PointRequest;
-import com.lab7.dto.PointResponse;
-import com.lab7.entity.Function;
-import com.lab7.entity.Point;
-import com.lab7.repository.FunctionRepository;
-import com.lab7.repository.PointRepository;
+import com.lab7.dto.*;
+import com.lab7.entity.*;
+import com.lab7.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -36,20 +31,12 @@ public class PointController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getPoints(@RequestParam(required = false) Long id, @RequestParam(required = false) Long functionId) {
-        if (id != null)
-            return pointRepository.findById(id).map(p -> ResponseEntity.ok(toResponse(p))).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> getPoints(@RequestParam(required = false) Long id) {
+        Point point = pointRepository.findByFunctionId(id);
+        if (point == null)
+            return ResponseEntity.notFound().build();
 
-        else if (functionId != null) {
-            Point point = pointRepository.findByFunctionId(functionId);
-            if (point == null)
-                return ResponseEntity.notFound().build();
-
-            return ResponseEntity.ok(toResponse(point));
-        }
-
-        else
-            return ResponseEntity.badRequest().body("Необходимо указать параметр 'id' или 'functionId'");
+        return ResponseEntity.ok(toResponse(point));
     }
 
     @PostMapping
@@ -67,12 +54,12 @@ public class PointController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PointResponse> update(@PathVariable Long id, @RequestBody PointRequest request) {
+    @PutMapping
+    public ResponseEntity<PointResponse> update(@RequestParam Long id, @RequestBody PointRequest request) {
         log.info("Update Point id: {}, data: {}", id, request);
-        Optional<Point> optionalPoint = pointRepository.findById(id);
+        Point existing = pointRepository.findByFunctionId(id);
 
-        if (optionalPoint.isEmpty())
+        if (existing == null)
             return ResponseEntity.<PointResponse>notFound().build();
 
         Function function = functionRepository.findById(request.getFunctionId()).orElse(null);
@@ -81,7 +68,6 @@ public class PointController {
             return ResponseEntity.<PointResponse>badRequest().build();
         }
 
-        Point existing = optionalPoint.get();
         existing.setXValue(request.getX());
         existing.setYValue(request.getY());
         existing.setFunction(function);
@@ -90,14 +76,16 @@ public class PointController {
         return ResponseEntity.ok(toResponse(existing));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        log.info("Delete Point id: {}", id);
-        if (pointRepository.existsById(id)) {
-            pointRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteByFunctionId(@RequestParam Long id) {
+        log.info("Delete Points by functionId: {}", id);
 
-        return ResponseEntity.notFound().build();
+        Point point = pointRepository.findByFunctionId(id);
+        if (point == null)
+            return ResponseEntity.notFound().build();
+
+        pointRepository.deleteById(point.getId());
+
+        return ResponseEntity.noContent().build();
     }
 }

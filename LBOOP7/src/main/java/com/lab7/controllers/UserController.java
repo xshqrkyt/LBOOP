@@ -1,11 +1,9 @@
 package com.lab7.controllers;
 
 import com.lab7.dto.*;
-import com.lab7.dto.UserRequest;
-import com.lab7.dto.UserResponse;
-import com.lab7.enums.UserRole;
-import com.lab7.entity.User;
-import com.lab7.repository.UserRepository;
+import com.lab7.entity.*;
+import com.lab7.enums.*;
+import com.lab7.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +37,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getUser(@RequestParam(required = false) Long id, @RequestParam(required = false) String username) {
-        log.info("Получен запрос Get /spring/users.");
+        log.info("Получен запрос Get /lab6-1.0-SNAPSHOT/users.");
 
         if (id != null)
             return userRepository.findById(id).map(user -> ResponseEntity.ok(toResponse(user))).orElseGet(() -> ResponseEntity.notFound().build());
@@ -56,17 +54,16 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
-        log.info("Получен запрос POST /spring/users с телом: {}", request);
+        log.info("Получен запрос POST /lab6-1.0-SNAPSHOT/users с телом: {}", request);
         User entity = toEntity(request);
         User saved = userRepository.save(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {
-        log.info("Получен запрос PUT /spring/users/{} с телом: {}", id, request);
+    @PutMapping
+    public ResponseEntity<UserResponse> updateUser(@RequestParam Long id, @RequestBody UserRequest request) {
+        log.info("Получен запрос PUT /lab6-1.0-SNAPSHOT/users/{} с телом: {}", id, request);
         return userRepository.findById(id).map(existingUser -> {
-            existingUser.setUsername(request.getUsername());
             existingUser.setPasswordHash(request.getPasswordHash());
             existingUser.setEmail(request.getEmail());
             existingUser.setRole(UserRole.valueOf(request.getRole()));
@@ -79,14 +76,16 @@ public class UserController {
         });
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        log.info("Получен запрос DELETE /spring/users/{}", id);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestParam Long id) {
+        log.info("Получен запрос DELETE /lab6-1.0-SNAPSHOT/users/{}", id);
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             log.info("Удален пользователь с id {}", id);
             return ResponseEntity.noContent().build();
-        } else {
+        }
+
+        else {
             log.warn("Пользователь с id {} не найден для удаления", id);
             return ResponseEntity.notFound().build();
         }

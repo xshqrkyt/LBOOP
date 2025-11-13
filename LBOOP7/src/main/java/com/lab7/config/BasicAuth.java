@@ -48,7 +48,7 @@ public class BasicAuth {
                                 "/lab6-1.0-SNAPSHOT/composite-functions/**",
                                 "/lab6-1.0-SNAPSHOT/composite-function-links/**").hasRole("USER")
                         // Для остальных HTTP методов на этих же ресурсах - доступ запрещён
-                        .requestMatchers("/spring/users/**",
+                        .requestMatchers("/lab6-1.0-SNAPSHOT/users/**",
                                 "/lab6-1.0-SNAPSHOT/points/**",
                                 "/lab6-1.0-SNAPSHOT/functions/**",
                                 "/lab6-1.0-SNAPSHOT/composite-functions/**",

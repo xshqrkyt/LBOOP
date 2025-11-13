@@ -1,11 +1,8 @@
 package com.lab7.controllers;
 
-import com.lab7.dto.FunctionRequest;
-import com.lab7.dto.FunctionResponse;
-import com.lab7.entity.Function;
-import com.lab7.entity.User;
-import com.lab7.repository.FunctionRepository;
-import com.lab7.repository.UserRepository;
+import com.lab7.dto.*;
+import com.lab7.entity.*;
+import com.lab7.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -38,18 +34,26 @@ public class FunctionController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getFunctions(@RequestParam(required = false) Long id, @RequestParam(required = false) Long ownerId) {
+    public ResponseEntity<?> getFunctions(@RequestParam(required = false) Long id, @RequestParam(required = false) Long ownerId, @RequestParam(required = false) String name, @RequestParam(required = false) String type) {
         if (id != null)
             return functionRepository.findById(id).map(f -> ResponseEntity.ok(toResponse(f))).orElse(ResponseEntity.notFound().build());
 
         else if (ownerId != null) {
             List<Function> functions = functionRepository.findByOwnerId(ownerId);
-            List<FunctionResponse> responses = functions.stream().map(this::toResponse).collect(Collectors.toList());
-            return ResponseEntity.ok(responses);
+            return ResponseEntity.ok(functions.stream().map(this::toResponse).toList());
         }
 
-        else
-            return ResponseEntity.badRequest().body("Нужно указать параметр 'id' или 'ownerId'");
+        else if (name != null) {
+            List<Function> functions = functionRepository.findByName(name);
+            return ResponseEntity.ok(functions.stream().map(this::toResponse).toList());
+        }
+
+        else if (type != null) {
+            List<Function> functions = functionRepository.findByType(type);
+            return ResponseEntity.ok(functions.stream().map(this::toResponse).toList());
+        }
+
+        return ResponseEntity.badRequest().body("Нужно указать параметр 'id', 'ownerId', 'name' или 'type'");
     }
 
     @PostMapping
@@ -67,8 +71,8 @@ public class FunctionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<FunctionResponse> update(@PathVariable Long id, @RequestBody FunctionRequest request) {
+    @PutMapping
+    public ResponseEntity<FunctionResponse> update(@RequestParam Long id, @RequestBody FunctionRequest request) {
         log.info("Update Function id: {}, data: {}", id, request);
         Optional<Function> functionOptional = functionRepository.findById(id);
         if (functionOptional.isEmpty())
@@ -91,8 +95,8 @@ public class FunctionController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
         log.info("Delete Function id: {}", id);
         if (functionRepository.existsById(id)) {
             functionRepository.deleteById(id);

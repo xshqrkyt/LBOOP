@@ -1,19 +1,15 @@
 package com.lab7.controllers;
 
-import com.lab7.dto.CompositeFunctionRequest;
-import com.lab7.dto.CompositeFunctionResponse;
-import com.lab7.entity.CompositeFunction;
-import com.lab7.entity.User;
-import com.lab7.repository.CompositeFunctionRepository;
-import com.lab7.repository.UserRepository;
+import com.lab7.dto.*;
+import com.lab7.entity.*;
+import com.lab7.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -66,8 +62,8 @@ public class CompositeFunctionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CompositeFunctionResponse> update(@PathVariable Long id, @RequestBody CompositeFunctionRequest request) {
+    @PutMapping
+    public ResponseEntity<CompositeFunctionResponse> update(@RequestParam Long id, @RequestBody CompositeFunctionRequest request) {
         log.info("Update CompositeFunction id: {}, data: {}", id, request);
         Optional<CompositeFunction> compositeFunctionOptional = compositeFunctionRepository.findById(id);
         if (compositeFunctionOptional.isEmpty())
@@ -88,8 +84,8 @@ public class CompositeFunctionController {
         return ResponseEntity.ok(toResponse(existing));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
         log.info("Delete CompositeFunction id: {}", id);
         if (compositeFunctionRepository.existsById(id)) {
             compositeFunctionRepository.deleteById(id);
