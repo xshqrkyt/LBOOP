@@ -1,0 +1,1 @@
+INSERT INTO points (x_value, y_value, function_id) VALUES (?, ?, ?)

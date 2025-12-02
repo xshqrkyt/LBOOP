@@ -1,0 +1,1 @@
+DELETE FROM composite_function_link WHERE id = ?;

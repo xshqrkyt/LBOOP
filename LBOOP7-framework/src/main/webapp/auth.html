@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в ЛР7</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="auth-page">
+<div class="auth-card">
+    <h1>Лабораторная №7</h1>
+    <p class="muted">Сначала авторизуйтесь или зарегистрируйтесь, потом откроется основной интерфейс.</p>
+    <label>Имя<input id="authUsername" type="text" autocomplete="username" placeholder="имя"></label>
+    <label>Пароль<input id="authPassword" type="password" autocomplete="new-password" placeholder="•••••"></label>
+    <label>Подтверждение пароля<input id="authConfirm" type="password" autocomplete="new-password" placeholder="повторите пароль"></label>
+    <p class="muted">Требования: минимум 8 символов, буква, цифра и заглавная буква.</p>
+    <div class="actions">
+        <button id="authLogin">Войти</button>
+        <button id="authRegister" class="ghost">Зарегистрироваться</button>
+        <button id="authOffline" class="ghost">Продолжить офлайн</button>
+    </div>
+    <div id="authMessage" class="muted"></div>
+    <div class="actions spaced">
+        <a class="button ghost" href="/dnd.html" target="_blank">Пасхалки</a>
+    </div>
+</div>
+<script src="assets/auth.js"></script>
+</body>
+</html>

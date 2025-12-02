@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS composite_function (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    owner_id BIGINT NOT NULL,
+
+    CONSTRAINT cfk_owner FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE
+);

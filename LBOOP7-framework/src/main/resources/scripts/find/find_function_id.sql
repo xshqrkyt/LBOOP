@@ -1,0 +1,1 @@
+SELECT functions.*, users.username AS owner_name FROM functions JOIN users ON functions.owner_id = users.id WHERE functions.id = ?

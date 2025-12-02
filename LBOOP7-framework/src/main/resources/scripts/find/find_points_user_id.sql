@@ -1,0 +1,1 @@
+SELECT p.* FROM points p JOIN functions f ON p.function_id = f.id WHERE f.owner_id = ?;

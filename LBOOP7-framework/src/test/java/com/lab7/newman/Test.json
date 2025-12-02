@@ -1,0 +1,1808 @@
+{
+	"info": {
+		"_postman_id": "ba58e4b5-72bd-4210-a5dd-569a0752f8a9",
+		"name": "ServletTestAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49758171",
+		"_collection_link": "https://me-di-a-3437652.postman.co/workspace/Diana-Melnikova's-Workspace~8e65cc47-b907-4b4e-8f79-7ae5d8222433/collection/49758171-ba58e4b5-72bd-4210-a5dd-569a0752f8a9?action=share&source=collection_link&creator=49758171"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Генерируем уникальный username и email\r",
+							"let username = 'user_' + Math.floor(Math.random() * 10000);\r",
+							"let email = username + '@example.com';\r",
+							"\r",
+							"// Сохраняем их в переменные окружения\r",
+							"pm.environment.set('username', username);\r",
+							"pm.environment.set('email', email);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has id\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.environment.set(\"createdUserId\", jsonData.id);  // сохраняем ID созданного пользователя\r",
+							"    pm.environment.set(\"createdUsername\", jsonData.username);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response username matches request\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.username).to.eql(pm.environment.get('username'));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response role matches request\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.role).to.eql('USER');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"passwordHash\": \"password123\",\r\n  \"email\": \"{{email}}\",\r\n  \"role\": \"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Function",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let functionName = 'func_' + Math.floor(Math.random() * 10000);\r",
+							"pm.environment.set('functionName', functionName);\r",
+							"\r",
+							"// Получаем ранее сохранённый createdUserId из переменных окружения\r",
+							"let createdUserId = pm.environment.get('createdUserId'); \r",
+							"pm.environment.set('ownerId', createdUserId);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has id\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData).to.have.property('id');\r",
+							"  // Сохраняем ID созданной функции\r",
+							"  pm.environment.set(\"createdFunctionId\", jsonData.id);\r",
+							"  // Исправлено: сохраняем имя функции, а не username\r",
+							"  pm.environment.set(\"createdFunctionName\", jsonData.name);\r",
+							"  pm.environment.set(\"createdFunctionType\", jsonData.type);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response name matches request\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData.name).to.eql(pm.environment.get('functionName'));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{functionName}}\",\r\n  \"type\": \"SQR\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Points",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const functionId = pm.environment.get(\"createdFunctionId\");\r",
+							"if (functionId) {\r",
+							"    const body = {\r",
+							"        xValues: [1.0, 2.5, 3.14],\r",
+							"        yValues: [4.0, 5.5, 6.28],\r",
+							"        functionId: Number(functionId)\r",
+							"    };\r",
+							"    pm.request.body.update(JSON.stringify(body));\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id точки\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"\r",
+							"    pm.environment.set(\"createdPointsId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит правильное functionId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"createdFunctionId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка размеров и содержимого массивов xValues и yValues\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const requestBody = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"    // Проверяем одинаковую длину массивов\r",
+							"    pm.expect(jsonData.xValues.length).to.eql(requestBody.xValues.length);\r",
+							"    pm.expect(jsonData.yValues.length).to.eql(requestBody.yValues.length);\r",
+							"\r",
+							"    // Поэлементная проверка для xValues\r",
+							"    for (let i = 0; i < requestBody.xValues.length; i++) {\r",
+							"        pm.expect(jsonData.xValues[i]).to.eql(requestBody.xValues[i]);\r",
+							"    }\r",
+							"    // Поэлементная проверка для yValues\r",
+							"    for (let i = 0; i < requestBody.yValues.length; i++) {\r",
+							"        pm.expect(jsonData.yValues[i]).to.eql(requestBody.yValues[i]);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"xValues\": [1.0, 2.5, 3.14],\r\n  \"yValues\": [4.0, 5.5, 6.28],\r\n  \"functionId\": {{createdFunctionId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/points",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CompF",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const uniqueName = \"CompositeFunc_\" + new Date().getTime();\r",
+							"pm.environment.set(\"compositeFunctionName\", uniqueName);\r",
+							"\r",
+							"// Обновляем тело запроса с динамическим именем и ownerId из переменной\r",
+							"let body = {\r",
+							"  name: uniqueName,\r",
+							"  ownerId: Number(pm.environment.get(\"createdUserId\")) || 0\r",
+							"};\r",
+							"pm.request.body.raw = JSON.stringify(body);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит корректные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedName = pm.environment.get(\"compositeFunctionName\");\r",
+							"    const expectedOwnerId = Number(pm.environment.get(\"createdUserId\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\", expectedName);\r",
+							"    pm.expect(jsonData).to.have.property(\"ownerId\", expectedOwnerId);\r",
+							"\r",
+							"    // Сохраняем id созданной composite function\r",
+							"    pm.environment.set(\"createdCompositeFunctionId\", jsonData.id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"TestCompositeFunction\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-functions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-functions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CompFLink",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Пример динамического присвоения orderIndex, если нужно\r",
+							"let orderIdx = 1;  // или другая логика\r",
+							"pm.environment.set(\"orderIndex\", orderIdx);\r",
+							"\r",
+							"// Можно обновить тело запроса перед отправкой\r",
+							"let body = {\r",
+							"    compositeId: Number(pm.environment.get(\"createdCompositeFunctionId\")),\r",
+							"    functionId: Number(pm.environment.get(\"createdFunctionId\")),\r",
+							"    orderIndex: orderIdx\r",
+							"};\r",
+							"\r",
+							"pm.request.body.raw = JSON.stringify(body);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 201 Created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит id и корректные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"compositeId\", Number(pm.environment.get(\"createdCompositeFunctionId\")));\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\", Number(pm.environment.get(\"createdFunctionId\")));\r",
+							"    pm.expect(jsonData).to.have.property(\"orderIndex\", Number(pm.environment.get(\"orderIndex\")));\r",
+							"\r",
+							"    // Сохраняем id созданной ссылки для дальнейших тестов\r",
+							"    pm.environment.set(\"createdCompositeFunctionLinkId\", jsonData.id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"compositeId\": {{createdCompositeFunctionId}},\r\n  \"functionId\": {{createdFunctionId}},\r\n  \"orderIndex\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has user data\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData).to.have.property('username');\r",
+							"    pm.expect(jsonData).to.have.property('role');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response username matches expected\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.username).to.eql(pm.environment.get('username'));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response role matches expected\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.role).to.eql('USER');  // Или 'user', зависит от вашего приложения\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/users?id={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Username",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user data\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('username');\r",
+							"    pm.expect(jsonData.username).to.eql(pm.environment.get('username'));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/users?username={{createdUsername}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{createdUsername}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 or 204\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Email is updated\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email).to.eql(\"updateduser@example.com\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Role is user\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.role).to.eql('ADMIN');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"updatedUsername\",\r\n  \"passwordHash\": \"newpassword123\",\r\n  \"email\": \"updateduser@example.com\",\r\n  \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/users?id={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Function by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200); // Успешное получение данных\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has correct id\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData).to.have.property('id');\r",
+							"  pm.expect(jsonData.id).to.eql(pm.environment.get(\"createdFunctionId\")); // Проверяем, что ID совпадает с ожидаемым\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response name matches\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData.name).to.eql(pm.environment.get('functionName'));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Function by Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains function with requested name\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  if (Array.isArray(jsonData)) {\r",
+							"    // если возвращается список\r",
+							"    pm.expect(jsonData.some(f => f.name === pm.environment.get('functionName'))).to.be.true;\r",
+							"  } else {\r",
+							"    // если возвращается один объект\r",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get('functionName'));\r",
+							"  }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions?name={{createdFunctionName}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{createdFunctionName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Function by Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains functions of specified type\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData).to.be.an('array');\r",
+							"  pm.expect(jsonData.some(f => f.type === pm.environment.get('createdFunctionType'))).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions?type={{createdFunctionType}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "{{createdFunctionType}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Function",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Пример новой случайной строки имени\r",
+							"let newFunctionName = 'func_updated_' + Math.floor(Math.random() * 10000);\r",
+							"pm.environment.set('newFunctionName', newFunctionName);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response name matches update\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData.name).to.eql(pm.environment.get('newFunctionName'));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{newFunctionName}}\",\r\n  \"type\": \"COMPOSITE\",\r\n  \"ownerId\": {{ownerId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Points by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит correct id\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const createdFunctionId = pm.environment.get(\"createdFunctionId\");\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\");\r",
+							"    pm.expect(jsonData.functionId).to.eql(Number(createdFunctionId));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массивы xValues и yValues\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"xValues\").that.is.an(\"array\");\r",
+							"    pm.expect(jsonData).to.have.property(\"yValues\").that.is.an(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/points?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"points"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Points",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Для примера генерируем случайные значения для x и y\r",
+							"const xValues = [1.0, 2.5, 3.3];\r",
+							"const yValues = [4.0, 5.2, 6.7];\r",
+							"\r",
+							"// Сохраним в переменные окружения для подстановки в тело запроса\r",
+							"pm.environment.set(\"xValues\", JSON.stringify(xValues));\r",
+							"pm.environment.set(\"yValues\", JSON.stringify(yValues));\r",
+							"pm.environment.set(\"functionId\", pm.environment.get(\"createdFunctionId\"));\r",
+							"\r",
+							"// Обновим тело запроса динамически\r",
+							"const body = {\r",
+							"  xValues: xValues,\r",
+							"  yValues: yValues,\r",
+							"  functionId: pm.environment.get(\"functionId\")\r",
+							"};\r",
+							"\r",
+							"pm.request.body.raw = JSON.stringify(body);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 or 204\", () => {\r",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});\r",
+							"\r",
+							"if (pm.response.code === 200) {\r",
+							"  const jsonData = pm.response.json();\r",
+							"\r",
+							"  pm.test(\"Response has id\", () => {\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.environment.set(\"createdPointsId\", jsonData.id);\r",
+							"  });\r",
+							"\r",
+							"  pm.test(\"xValues is an array and not empty\", () => {\r",
+							"    pm.expect(jsonData).to.have.property(\"xValues\").that.is.an(\"array\").that.is.not.empty;\r",
+							"  });\r",
+							"\r",
+							"  pm.test(\"yValues is an array and not empty\", () => {\r",
+							"    pm.expect(jsonData).to.have.property(\"yValues\").that.is.an(\"array\").that.is.not.empty;\r",
+							"  });\r",
+							"\r",
+							"  pm.test(\"functionId matches request\", () => {\r",
+							"    pm.expect(jsonData.functionId).to.eql(pm.environment.get(\"functionId\"));\r",
+							"  });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"xValues\": [1.0, 2.5, 3.3],\r\n  \"yValues\": [4.0, 5.2, 6.7],\r\n  \"functionId\": {{createdFunctionId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/points?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"points"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompF by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит корректные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedId = Number(pm.environment.get(\"createdCompositeFunctionId\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\", expectedId);\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.is.a(\"string\");\r",
+							"    pm.expect(jsonData).to.have.property(\"ownerId\").that.is.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-functions?id={{createdCompositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CompF",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const updatedName = \"UpdatedCompositeFunc_\" + new Date().getTime();\r",
+							"pm.environment.set(\"updatedCompositeFunctionName\", updatedName);\r",
+							"\r",
+							"// Формируем тело запроса с динамическими значениями\r",
+							"const body = {\r",
+							"    name: updatedName,\r",
+							"    ownerId: Number(pm.environment.get(\"createdUserId\")) || 0\r",
+							"};\r",
+							"\r",
+							"pm.request.body.raw = JSON.stringify(body);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 - успешно обновлено\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит обновленные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedName = pm.environment.get(\"updatedCompositeFunctionName\");\r",
+							"    const expectedOwnerId = Number(pm.environment.get(\"createdUserId\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\", expectedName);\r",
+							"    pm.expect(jsonData).to.have.property(\"ownerId\", expectedOwnerId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"UpdatedCompositeFunctionName\",\r\n  \"ownerId\": {{createdUserId}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-functions?id={{createdCompositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит корректные поля\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedId = Number(pm.environment.get(\"createdCompositeFunctionLinkId\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\", expectedId);\r",
+							"    pm.expect(jsonData).to.have.property(\"compositeId\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links?id={{createdCompositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionLinkId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by Function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив объектов с полем functionId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedFunctionId = Number(pm.environment.get(\"createdFunctionId\"));\r",
+							"    \r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"\r",
+							"    // Проверяем, что каждый элемент массива содержит ожидаемый functionId\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"functionId\", expectedFunctionId);\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"compositeId\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links?functionId={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "functionId",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CompFLink by CompFId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив объектов с compositeId\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const expectedCompositeId = Number(pm.environment.get(\"createdCompositeFunctionId\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"compositeId\", expectedCompositeId);\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"functionId\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"orderIndex\").that.is.a(\"number\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links?compositeId={{createdCompositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "compositeId",
+							"value": "{{createdCompositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CompFLink",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const updatedOrderIndex = 2;\r",
+							"pm.environment.set(\"updatedOrderIndex\", updatedOrderIndex);\r",
+							"\r",
+							"const body = {\r",
+							"    compositeId: Number(pm.environment.get(\"createdCompositeFunctionId\")),\r",
+							"    functionId: Number(pm.environment.get(\"createdFunctionId\")),\r",
+							"    orderIndex: updatedOrderIndex\r",
+							"};\r",
+							"\r",
+							"pm.request.body.raw = JSON.stringify(body);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 - успешно обновлено\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит обновленные данные\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\", Number(pm.environment.get(\"createdCompositeFunctionLinkId\")));\r",
+							"    pm.expect(jsonData).to.have.property(\"compositeId\", Number(pm.environment.get(\"createdCompositeFunctionId\")));\r",
+							"    pm.expect(jsonData).to.have.property(\"functionId\", Number(pm.environment.get(\"createdFunctionId\")));\r",
+							"    pm.expect(jsonData).to.have.property(\"orderIndex\", Number(pm.environment.get(\"updatedOrderIndex\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"compositeId\": {{createdCompositeFunctionId}},\r\n  \"functionId\": {{createdFunctionId}},\r\n  \"orderIndex\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links?id={{createdCompositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionLinkId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CompFLink",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content - успешно удалено\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is empty\", () => {\r",
+							"  pm.expect(pm.response.text()).to.eql('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-function-links?id={{createdCompositeFunctionLinkId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-function-links"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionLinkId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CompF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 204 No Content - удалено успешно\", () => {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"// Либо если ваш API возвращает 200 и сообщение\r",
+							"pm.test(\"Либо статус 200 OK\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/composite-functions?id={{createdCompositeFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"composite-functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdCompositeFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Points",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 или 204\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is empty\", () => {\r",
+							"  pm.expect(pm.response.text()).to.eql('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/points?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"points"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {\r",
+							"  pm.response.to.have.status(204);  // Обычно для DELETE успешный код 204 No Content\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is empty\", () => {\r",
+							"  pm.expect(pm.response.text()).to.eql('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/functions?id={{createdFunctionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"functions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdFunctionId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 or 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is empty or undefined\", function () {\r",
+							"    const responseBody = pm.response.text();\r",
+							"    if (responseBody !== undefined && responseBody !== null) {\r",
+							"        pm.expect(responseBody).to.be.empty;\r",
+							"    } else {\r",
+							"        pm.expect(true).to.be.true; // тест пройдет, если тело отсутствует\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lab6-1.0-SNAPSHOT/users?id={{createdUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lab6-1.0-SNAPSHOT",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "userpassword",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "createdUserId",
+			"value": ""
+		}
+	]
+}

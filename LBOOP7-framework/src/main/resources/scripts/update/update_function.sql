@@ -1,0 +1,1 @@
+UPDATE functions SET name = ?, type = ? WHERE id = ?

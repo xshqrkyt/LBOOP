@@ -1,0 +1,1 @@
+SELECT composite_function.*, users.username AS owner_name FROM composite_function JOIN users ON composite_function.owner_id = users.id WHERE composite_function.name = ?

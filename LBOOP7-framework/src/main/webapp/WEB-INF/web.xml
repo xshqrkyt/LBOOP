@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FunctionServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.FunctionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FunctionServlet</servlet-name>
+        <url-pattern>/functions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PointsServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.PointsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PointsServlet</servlet-name>
+        <url-pattern>/points</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CompositeFunctionServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.CompositeFunctionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompositeFunctionServlet</servlet-name>
+        <url-pattern>/composite-functions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CompositeFunctionLinkServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.CompositeFunctionLinkServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OperationServlet</servlet-name>
+        <servlet-class>com.lab7.servlet.OperationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompositeFunctionLinkServlet</servlet-name>
+        <url-pattern>/composite-function-links</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OperationServlet</servlet-name>
+        <url-pattern>/operations</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>BasicAuthServlet</filter-name>
+        <filter-class>com.lab7.servlet.BasicAuthServlet</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>BasicAuthServlet</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

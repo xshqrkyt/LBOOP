@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЛР7 — Табулированные функции</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="layout">
+    <header class="panel">
+        <div>
+            <h1>Лабораторная работа №7</h1>
+            <p class="muted">Табулированные функции • арифметика • дифференцирование • интеграл • графики</p>
+        </div>
+        <div class="actions">
+            <button id="authPageBtn" class="ghost">Войти / Сменить учётку</button>
+            <a class="button ghost" href="/dnd.html" target="_blank">Пасхалки (D&D)</a>
+            <button id="syncBtn" class="ghost">Синхронизировать</button>
+            <div class="badge" id="authStatus">Не авторизован</div>
+        </div>
+    </header>
+
+    <main class="grid">
+        <section class="card" data-mobile-collapse="true">
+            <div class="card-header">
+                <div>
+                    <h2>Настройки фабрики</h2>
+                    <p class="muted">Выберите реализацию табулированной функции</p>
+                </div>
+                <button class="collapse-toggle" type="button" aria-label="Свернуть настройки"></button>
+            </div>
+            <div class="card-body">
+                <div class="segmented">
+                    <button data-factory="ARRAY" class="active">Массив</button>
+                    <button data-factory="LINKED_LIST">Связный список</button>
+                </div>
+                <label class="switch fancy">
+                    <input id="darkModeToggle" type="checkbox" checked>
+                    <span>Тёмная тема (в стиле подземелий)</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="card span-2" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Создать функцию из точек</h2>
+                <div class="actions">
+                    <button id="addPointRow" class="ghost">Добавить строку</button>
+                    <button id="shufflePoints" class="ghost">Случайные точки</button>
+                    <button class="collapse-toggle" type="button" aria-label="Свернуть создание из точек"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <label>Название функции<input id="pointsName" type="text" placeholder="f(x)"></label>
+                <div class="table" id="pointsTable">
+                    <div class="table-head">
+                        <div>X</div>
+                        <div>Y</div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="buildPoints">Создать</button>
+                    <button id="clearPoints" class="ghost">Очистить</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card span-2" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Создать функцию из базовой</h2>
+                <div class="actions">
+                    <button id="refreshSimpleFunctions" class="ghost">Сканировать заклинания</button>
+                    <button class="collapse-toggle" type="button" aria-label="Свернуть создание из базовой"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="fn-gallery" id="simpleGallery"></div>
+                <div class="grid half">
+                    <label>Функция<select id="simpleFunctionSelect"></select><div id="simpleFunctionFancy"></div></label>
+                    <label>Название<input id="simpleName" type="text" placeholder="g(x)"></label>
+                    <label>Количество точек<input id="simplePoints" type="number" min="2" value="5"></label>
+                    <label>Интервал<input id="simpleRange" type="text" placeholder="0;10"></label>
+                </div>
+                <div id="simpleParams" class="grid half"></div>
+                <div class="actions">
+                    <button id="buildSimple">Создать</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card span-2" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Операции над функциями</h2>
+                <div class="actions">
+                    <div class="chip">Сложение / Вычитание / Умножение / Деление</div>
+                    <button class="collapse-toggle" type="button" aria-label="Свернуть операции"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="grid half">
+                    <label>Первая функция<select id="opFirst"></select><div id="opFirstFancy"></div></label>
+                    <label>Вторая функция<select id="opSecond"></select><div id="opSecondFancy"></div></label>
+                </div>
+                <div class="actions">
+                    <button data-op="add">Сложить</button>
+                    <button data-op="sub">Вычесть</button>
+                    <button data-op="mul">Умножить</button>
+                    <button data-op="div">Разделить</button>
+                </div>
+                <div class="actions">
+                    <button id="insertBtn" class="ghost">Вставка точки</button>
+                    <button id="removeBtn" class="ghost">Удалить точку</button>
+                </div>
+                <div id="opResult" class="muted"></div>
+            </div>
+        </section>
+
+        <section class="card" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Дифференцирование</h2>
+                <button class="collapse-toggle" type="button" aria-label="Свернуть дифференцирование"></button>
+            </div>
+            <div class="card-body">
+                <label>Исходная функция<select id="diffSource"></select><div id="diffSourceFancy"></div></label>
+                <div class="actions">
+                    <button id="diffBtn">Дифференцировать</button>
+                </div>
+                <div id="diffResult" class="muted"></div>
+            </div>
+        </section>
+
+        <section class="card" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Интеграл</h2>
+                <button class="collapse-toggle" type="button" aria-label="Свернуть интеграл"></button>
+            </div>
+            <div class="card-body">
+                <label>Функция<select id="integralSource"></select><div id="integralSourceFancy"></div></label>
+                <label>Число потоков<input id="integralThreads" type="number" min="1" max="16" value="4"></label>
+                <div class="actions">
+                    <button id="integralBtn">Вычислить</button>
+                </div>
+                <div id="integralResult" class="muted"></div>
+            </div>
+        </section>
+
+        <section class="card span-2" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>График функции и apply()</h2>
+                <div class="actions">
+                    <div class="chip">Масштабирование + подсказки</div>
+                    <button class="collapse-toggle" type="button" aria-label="Свернуть график"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="stack" id="chartPickerWrap">
+                    <div class="compact-row">
+                        <label class="visually-hidden">Функция<select id="chartSource"></select></label>
+                        <div id="chartPicker" class="dropdown"></div>
+                        <button id="chartPickerCollapse" class="ghost" type="button">Свернуть список</button>
+                    </div>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="chart" width="900" height="360"></canvas>
+                    <canvas id="chartOverlay" class="chart-overlay" width="900" height="360"></canvas>
+                </div>
+                <div class="grid half">
+                    <label>Окно X (min; max)<input id="chartRangeX" type="text" placeholder="auto" /></label>
+                    <label>Окно Y (min; max)<input id="chartRangeY" type="text" placeholder="auto" /></label>
+                </div>
+                <div class="grid half">
+                    <label>X для apply()<input id="applyX" type="number" step="any" value="0"></label>
+                    <div class="actions"><button id="applyBtn">Вычислить</button></div>
+                </div>
+                <div class="actions">
+                    <button id="chartRedraw">Обновить график</button>
+                    <button id="chartAuto">Автоинтервалы</button>
+                </div>
+                <div id="applyResult" class="muted"></div>
+            </div>
+        </section>
+
+        <section class="card span-2" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Сложные функции (Composite)</h2>
+                <div class="actions">
+                    <button id="addCompositeStep" class="ghost">Добавить шаг</button>
+                    <button class="collapse-toggle" type="button" aria-label="Свернуть сложные функции"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="compositeSteps" class="stack"></div>
+                <div class="actions">
+                    <button id="buildComposite">Собрать</button>
+                </div>
+                <div id="compositeResult" class="muted"></div>
+            </div>
+        </section>
+
+        <section class="card" data-mobile-collapse="true">
+            <div class="card-header">
+                <h2>Файлы</h2>
+                <button class="collapse-toggle" type="button" aria-label="Свернуть файловые операции"></button>
+            </div>
+            <div class="card-body">
+                <label>Сохранить функцию<select id="saveSource"></select><div id="saveSourceFancy"></div></label>
+                <div class="grid half">
+                    <label>Формат<select id="saveFormat"><option value="json">JSON</option><option value="xml">XML</option></select></label>
+                    <button id="saveBtn">Сохранить</button>
+                </div>
+                <div class="file-picker">
+                    <label class="file-button">Выберите файл<input id="loadFile" type="file" accept=".json,.xml" hidden></label>
+                    <span id="fileName" class="file-name">Файл не выбран</span>
+                </div>
+                <div class="actions">
+                    <button id="loadBtn">Загрузить</button>
+                </div>
+                <div id="fileResult" class="muted"></div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div class="modal" id="modal" hidden onclick="if (event.target === this) this.hidden = true;">
+    <div class="modal-content">
+        <h3 id="modalTitle">Сообщение</h3>
+        <p id="modalMessage"></p>
+        <div class="actions">
+            <button id="modalClose" onclick="document.getElementById('modal').hidden = true;">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
