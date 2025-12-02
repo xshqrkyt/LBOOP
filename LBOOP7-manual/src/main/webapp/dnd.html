@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D пасхалки</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="layout">
+    <header class="panel">
+        <div>
+            <h1>Таверна D&D</h1>
+            <p class="muted">Броски d20, пламя дракона и прочие пасхалки, вынесенные в отдельную комнату.</p>
+        </div>
+        <div class="actions">
+            <a class="button ghost" href="/index.html">Вернуться в основное приложение</a>
+        </div>
+    </header>
+
+    <main class="grid">
+        <section class="card">
+            <h2>Бросок d20</h2>
+            <p class="muted">Число рождается из портала: сияние, руны и вспышка вместо кубика.</p>
+            <div class="dice-stage">
+                <div id="arcanePortal" class="portal">
+                    <div class="portal-ring ring-1"></div>
+                    <div class="portal-ring ring-2"></div>
+                    <div class="portal-ring ring-3"></div>
+                    <div id="portalValue" class="portal-value">20</div>
+                </div>
+            </div>
+            <div id="diceReadout" class="muted"></div>
+            <div class="actions">
+                <button id="rollD20">Бросить d20</button>
+                <button id="rerollD20" class="ghost">Ещё раз</button>
+            </div>
+            <div id="diceLog" class="muted"></div>
+        </section>
+
+        <section class="card span-2">
+            <div class="card-header">
+                <h2>Мини-игра: Подземелье</h2>
+                <div class="chip">Пошаговый бой в стиле D&D</div>
+            </div>
+            <div id="gameStats" class="muted">Нажмите «Начать», чтобы войти в подземелье.</div>
+            <div class="actions">
+                <button id="adventureStart">Начать</button>
+                <button id="adventureAttack" class="ghost" disabled>Атаковать</button>
+                <button id="adventureDefend" class="ghost" disabled>Защититься</button>
+                <button id="adventureSpell" class="ghost" disabled>Заклинание</button>
+                <button id="adventureRest" class="ghost" disabled>Отдохнуть</button>
+            </div>
+            <div id="gameLog" class="game-log"></div>
+        </section>
+
+        <section class="card">
+            <h2>Сундук с лутом</h2>
+            <p class="muted">Случайные предметы, которые можно унести из подземелья.</p>
+            <div class="actions"><button id="lootBtn">Открыть сундук</button></div>
+            <ul id="lootList"></ul>
+        </section>
+
+        <section class="card">
+            <h2>Слухи из таверны</h2>
+            <p class="muted">Нажмите, чтобы послушать последние пересуды.</p>
+            <div class="actions"><button id="rumorBtn">Подслушать</button></div>
+            <div id="rumorText" class="muted"></div>
+        </section>
+
+        <section class="card">
+            <h2>Генератор квестов</h2>
+            <p class="muted">Куда отправиться сегодня и кого впечатлить?</p>
+            <div class="actions"><button id="questBtn">Сгенерировать сюжет</button></div>
+            <div id="questText" class="muted"></div>
+        </section>
+
+        <section class="card">
+            <h2>NPC для импровизации</h2>
+            <p class="muted">Когда мастер просит сыграть случайного персонажа.</p>
+            <div class="actions"><button id="npcBtn">Показать героя</button></div>
+            <div id="npcText" class="muted"></div>
+        </section>
+
+        <section class="card">
+            <h2>Проверка навыка</h2>
+            <div class="mini-game">
+                <label>Навык
+                    <select id="skillSelect">
+                        <option value="Сила">Сила</option>
+                        <option value="Ловкость">Ловкость</option>
+                        <option value="Интеллект">Интеллект</option>
+                        <option value="Харизма">Харизма</option>
+                    </select>
+                </label>
+                <label>Сложность (КС)
+                    <input id="skillDc" type="number" value="12" min="5" max="30" />
+                </label>
+                <div class="actions">
+                    <button id="skillRoll">Бросить проверку</button>
+                </div>
+                <div id="skillResult" class="mini-board muted"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Гоблинский турнир</h2>
+            <p class="muted">Сыграйте в быструю мини-игру: выберите действие, чтобы победить хитрого гоблина.</p>
+            <div class="actions">
+                <button class="ghost" data-arena="feint">Обмануть</button>
+                <button class="ghost" data-arena="strike">Ударить</button>
+                <button class="ghost" data-arena="bribe">Подкупить</button>
+            </div>
+            <div id="arenaLog" class="mini-board muted"></div>
+        </section>
+
+        <section class="card span-2">
+            <h2>Колесо удачи</h2>
+            <p class="muted">Запустите колесо и получите эффект для следующего приключения.</p>
+            <div class="actions">
+                <button id="wheelSpin">Крутить колесо</button>
+            </div>
+            <div id="wheelResult" class="mini-board muted"></div>
+        </section>
+
+        <section class="card span-2">
+            <h2>Таверна: мини-игры</h2>
+            <p class="muted">Попробуйте удачу в уличной гонке, вытяните карту события или решите загадку старого барда.</p>
+            <div class="actions">
+                <button id="raceBtn">Крысинная гонка</button>
+                <button id="cardGame">Карта приключения</button>
+                <button id="riddleBtn" class="ghost">Загадка барда</button>
+                <button id="brewBtn" class="ghost">Сварить зелье</button>
+            </div>
+            <div id="miniGameBoard" class="mini-board muted"></div>
+        </section>
+
+        <section class="card span-2">
+            <h2>Игра «Бункер»</h2>
+            <p class="muted">Соберите команду выживших: роли, навыки, предметы и неожиданные катастрофы.</p>
+            <div class="actions">
+                <button id="bunkerDeal">Новая партия</button>
+                <button id="bunkerEvent" class="ghost">Событие раунда</button>
+                <button id="bunkerReset" class="ghost">Сбросить</button>
+            </div>
+            <div class="grid half">
+                <label>Выжившие<select id="bunkerSelect"></select></label>
+                <label>Что раскрывать<select id="bunkerFact">
+                    <option value="next">Следующий факт</option>
+                    <option value="role">Профессия</option>
+                    <option value="trait">Характеристика</option>
+                    <option value="item">Предмет</option>
+                    <option value="hobby">Хобби</option>
+                    <option value="condition">Состояние</option>
+                    <option value="special">Особая способность</option>
+                    <option value="random">Случайно</option>
+                </select></label>
+            </div>
+            <div class="actions compact-row">
+                <button id="bunkerReveal">Открыть выбранное</button>
+                <button id="bunkerSpecial" class="ghost">Спец. возможность</button>
+                <button id="bunkerSave" class="ghost">Принять в бункер</button>
+                <button id="bunkerVote" class="ghost">Выселить</button>
+            </div>
+            <div id="bunkerBoard" class="mini-board muted"></div>
+            <div id="bunkerLog" class="game-log" aria-live="polite"></div>
+        </section>
+    </main>
+</div>
+<script src="assets/dnd.js"></script>
+</body>
+</html>

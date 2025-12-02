@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>App tests</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="layout">
+    <header class="panel"><h1>Клиентские тесты</h1></header>
+    <main class="card">
+        <p id="status" class="muted">Запуск...</p>
+        <div style="display:none">
+            <div id="pointsTable"><div class="table-row"></div></div>
+            <button id="addPointRow"></button>
+            <button id="clearPoints"></button>
+            <button id="shufflePoints"></button>
+            <button id="buildPoints"></button>
+            <input id="pointsName">
+            <button data-factory="ARRAY"></button>
+            <button data-factory="LINKED_LIST"></button>
+            <input id="darkModeToggle" type="checkbox">
+            <select id="opFirst"></select>
+            <select id="opSecond"></select>
+            <select id="diffSource"></select>
+            <select id="integralSource"></select>
+            <select id="chartSource"></select>
+            <select id="saveSource"></select>
+            <select id="simpleFunctionSelect"></select>
+            <input id="simpleName">
+            <input id="simplePoints" value="2">
+            <input id="simpleRange" value="0;1">
+            <div id="simpleParams"></div>
+            <button id="refreshSimpleFunctions"></button>
+            <button id="buildSimple"></button>
+            <button data-op="add"></button>
+            <button data-op="sub"></button>
+            <button data-op="mul"></button>
+            <button data-op="div"></button>
+            <button id="insertBtn"></button>
+            <button id="removeBtn"></button>
+            <div id="opResult"></div>
+            <button id="diffBtn"></button>
+            <div id="diffResult"></div>
+            <input id="integralThreads" value="1">
+            <button id="integralBtn"></button>
+            <div id="integralResult"></div>
+            <canvas id="chart" width="300" height="150"></canvas>
+            <input id="applyX" value="0">
+            <button id="applyBtn"></button>
+            <div id="applyResult"></div>
+            <button id="chartRedraw"></button>
+            <button id="addCompositeStep"></button>
+            <div id="compositeSteps"></div>
+            <button id="buildComposite"></button>
+            <div id="compositeResult"></div>
+            <select id="saveFormat"></select>
+            <button id="saveBtn"></button>
+            <input id="loadFile" type="file">
+            <button id="loadBtn"></button>
+            <div id="fileResult"></div>
+            <input id="loginUsername">
+            <input id="loginPassword">
+            <button id="loginBtn"></button>
+            <button id="registerBtn"></button>
+            <div id="authStatus"></div>
+            <div id="modal" hidden>
+                <div id="modalClose" role="button">Закрыть</div>
+                <div id="modalTitle"></div>
+                <div id="modalMessage"></div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="app.js"></script>
+<script src="app.test.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        let statusEl = document.getElementById('status');
+        try {
+            const result = window.runTests();
+            statusEl.textContent = result;
+        } catch (err) {
+            statusEl.textContent = err.message;
+            statusEl.style.color = 'var(--danger)';
+        }
+    });
+</script>
+</body>
+</html>
